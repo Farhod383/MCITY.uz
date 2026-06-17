@@ -5,7 +5,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { useLang } from "@/i18n/LanguageContext";
-import { getProduct, products } from "@/data/catalog";
+import { getProduct, products, type Product } from "@/data/catalog";
 import { useCart } from "@/store/cart";
 import { toast } from "sonner";
 
@@ -95,7 +95,7 @@ function ProductDetail() {
               <h2 className="font-display text-xl font-bold uppercase">{t("product.specs")}</h2>
               <table className="mt-4 w-full text-sm">
                 <tbody>
-                  {product.specs.map((s, i: number) => (
+                  {product.specs.map((s: Product["specs"][number], i: number) => (
                     <tr key={i} className="border-b border-border">
                       <td className="py-3 pr-4 text-muted-foreground">{s.label[lang]}</td>
                       <td className="py-3 font-medium">{s.value}</td>
