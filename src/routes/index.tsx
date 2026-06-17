@@ -119,7 +119,7 @@ function Index() {
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {advantages.map(({ Icon, t: tk, d }) => (
               <div key={tk} className="rounded-sm border border-border bg-card p-7 shadow-card transition-all hover:-translate-y-1 hover:shadow-elevated">
-                <span className="grid h-13 w-13 place-items-center rounded-sm bg-primary p-3 text-primary-foreground"><Icon className="h-6 w-6" /></span>
+                <span className="grid h-12 w-12 place-items-center rounded-sm bg-primary text-primary-foreground"><Icon className="h-6 w-6" /></span>
                 <h3 className="mt-5 font-display text-xl font-bold">{t(tk)}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t(d)}</p>
               </div>
