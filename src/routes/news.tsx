@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Calendar } from "lucide-react";
 import { Layout, PageHeader } from "@/components/layout/Layout";
 import { useLang } from "@/i18n/LanguageContext";
-import factory from "@/assets/factory-exterior.jpg";
-import machinery from "@/assets/cat-machinery.jpg";
-import parts from "@/assets/product-parts.jpg";
+import factory from "@/assets/mcity-hero.jpg";
+import machinery from "@/assets/veh-fire.jpg";
+import parts from "@/assets/veh-aerial.jpg";
 
 export const Route = createFileRoute("/news")({
   head: () => ({

@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout, PageHeader } from "@/components/layout/Layout";
 import { useLang } from "@/i18n/LanguageContext";
-import hero from "@/assets/hero-factory.jpg";
-import factory from "@/assets/factory-exterior.jpg";
-import machinery from "@/assets/cat-machinery.jpg";
-import electrical from "@/assets/cat-electrical.jpg";
+import hero from "@/assets/mcity-hero.jpg";
+import factory from "@/assets/veh-fuel-tanker.jpg";
+import machinery from "@/assets/veh-crane.jpg";
+import electrical from "@/assets/veh-sewer-truck.jpg";
 
 export const Route = createFileRoute("/projects")({
   head: () => ({

@@ -3,14 +3,14 @@ import { Target, Eye, Gem, ArrowRight } from "lucide-react";
 import { Layout, PageHeader } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/i18n/LanguageContext";
-import factory from "@/assets/factory-exterior.jpg";
-import hero from "@/assets/hero-factory.jpg";
+import factory from "@/assets/veh-crane.jpg";
+import hero from "@/assets/mcity-hero.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — MCITY Industrial Manufacturing" },
-      { name: "description", content: "MCITY has been manufacturing premium industrial products since 2019, serving international clients with quality and reliability." },
+      { title: "About — MCITY Special Vehicle Manufacturer" },
+      { name: "description", content: "MCITY (Machinery City) has manufactured special-purpose and municipal vehicles in Uzbekistan since 2019, serving clients with quality and reliability." },
       { property: "og:title", content: "About — MCITY" },
       { property: "og:url", content: "/about" },
     ],
