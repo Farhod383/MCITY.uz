@@ -1,11 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight, ArrowUpRight, Award, PenTool, Factory, Cog, ShieldCheck, FlaskConical,
-  Gauge, Layers, MapPin,
+  Gauge, MapPin,
 } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { ProductCard } from "@/components/ProductCard";
 import { useLang } from "@/i18n/LanguageContext";
 import { categories, bestsellers, products } from "@/data/catalog";
 import heroImg from "@/assets/mcity-hero.jpg";
