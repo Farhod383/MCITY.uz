@@ -37,12 +37,14 @@ export interface Product {
 const L = (uz: string, uzc: string, ru: string, en: string): Loc => ({ uz, uzc, ru, en });
 
 export const categories: Category[] = [
-  { id: "tank", name: L("Sisterna texnikasi", "Систерна техникаси", "Цистерны", "Tanker Vehicles"), image: fuelTanker },
+  { id: "fuel", name: L("Yoqilg'i quyish texnikasi", "Ёқилғи қуйиш техникаси", "Топливозаправочная техника", "Fuel Service Vehicles"), image: fuelTanker },
   { id: "municipal", name: L("Kommunal texnika", "Коммунал техника", "Коммунальная техника", "Municipal Vehicles"), image: sweeper },
-  { id: "lifting", name: L("Ko'tarish va yuk texnikasi", "Кўтариш ва юк техникаси", "Подъёмная техника", "Lifting & Cargo"), image: crane },
-  { id: "airport", name: L("Aeroport texnikasi", "Аэропорт техникаси", "Аэропортовая техника", "Airport Equipment"), image: ambulift },
-  { id: "emergency", name: L("Favqulodda xizmat texnikasi", "Фавқулодда хизмат техникаси", "Аварийно-спасательная техника", "Emergency Vehicles"), image: fire },
-  { id: "special", name: L("Maxsus texnika", "Махсус техника", "Специальная техника", "Special Vehicles"), image: workshop },
+  { id: "airport", name: L("Aeroport xizmat texnikasi", "Аэропорт хизмат техникаси", "Аэропортовая техника", "Airport Service Vehicles"), image: ambulift },
+  { id: "emergency", name: L("Favqulodda yordam texnikasi", "Фавқулодда ёрдам техникаси", "Аварийно-спасательная техника", "Emergency Response Vehicles"), image: ambulance },
+  { id: "fire", name: L("Yong'in o'chirish texnikasi", "Ёнғин ўчириш техникаси", "Пожарная техника", "Firefighting Vehicles"), image: fire },
+  { id: "lifting", name: L("Ko'tarish texnikasi", "Кўтариш техникаси", "Подъёмная техника", "Lifting Equipment"), image: crane },
+  { id: "utility", name: L("Kommunal-xizmat texnikasi", "Коммунал-хизмат техникаси", "Сервисная техника", "Utility Vehicles"), image: waterTanker },
+  { id: "special", name: L("Maxsus muhandislik texnikasi", "Махсус муҳандислик техникаси", "Специальная инженерная техника", "Special Engineering Vehicles"), image: workshop },
 ];
 
 const spec = (lbl: Loc, value: string) => ({ label: lbl, value });
