@@ -359,7 +359,7 @@ export const translations: Record<Lang, Dict> = {
     "checkout.placeOrder": "Confirm Order",
     "checkout.payment": "Payment method",
     "checkout.success": "Your order has been received! We will contact you shortly.",
-    "footer.about": "International industrial manufacturing company operating since 2019.",
+    "footer.about": "MCITY — a special-purpose and municipal vehicle manufacturer in Uzbekistan, operating since 2019.",
     "footer.quickLinks": "Quick links",
     "footer.contact": "Contact",
     "footer.rights": "All rights reserved.",

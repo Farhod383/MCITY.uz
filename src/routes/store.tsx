@@ -8,7 +8,7 @@ export const Route = createFileRoute("/store")({
   head: () => ({
     meta: [
       { title: "Online Store — MCITY" },
-      { name: "description", content: "Order industrial products online from MCITY. Multi-currency pricing (UZS, USD, RUB), cart and checkout." },
+      { name: "description", content: "Order MCITY special-purpose and municipal vehicles online. Multi-language catalog, request a quote, cart and checkout." },
       { property: "og:title", content: "Online Store — MCITY" },
       { property: "og:url", content: "/store" },
     ],

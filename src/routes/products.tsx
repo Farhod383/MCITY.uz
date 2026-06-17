@@ -19,7 +19,7 @@ export const Route = createFileRoute("/products")({
   head: () => ({
     meta: [
       { title: "Products Catalog — MCITY" },
-      { name: "description", content: "Browse the full MCITY industrial product catalog: pipes, machinery, electrical equipment and metal parts with technical specifications." },
+      { name: "description", content: "Browse the full MCITY catalog of special-purpose and municipal vehicles: tankers, cranes, fire trucks, sweepers, ambulances and more with technical specifications." },
       { property: "og:title", content: "Products Catalog — MCITY" },
       { property: "og:url", content: "/products" },
     ],
