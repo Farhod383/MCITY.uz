@@ -7,9 +7,9 @@ import { products } from "@/data/catalog";
 export const Route = createFileRoute("/store")({
   head: () => ({
     meta: [
-      { title: "Online Store — STEELPROM" },
-      { name: "description", content: "Order industrial products online from STEELPROM. Multi-currency pricing (UZS, USD, RUB), cart and checkout." },
-      { property: "og:title", content: "Online Store — STEELPROM" },
+      { title: "Online Store — MCITY" },
+      { name: "description", content: "Order MCITY special-purpose and municipal vehicles online. Multi-language catalog, request a quote, cart and checkout." },
+      { property: "og:title", content: "Online Store — MCITY" },
       { property: "og:url", content: "/store" },
     ],
     links: [{ rel: "canonical", href: "/store" }],

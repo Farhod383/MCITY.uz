@@ -3,15 +3,15 @@ import { Target, Eye, Gem, ArrowRight } from "lucide-react";
 import { Layout, PageHeader } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/i18n/LanguageContext";
-import factory from "@/assets/factory-exterior.jpg";
-import hero from "@/assets/hero-factory.jpg";
+import factory from "@/assets/veh-crane.jpg";
+import hero from "@/assets/mcity-hero.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — STEELPROM Industrial Manufacturing" },
-      { name: "description", content: "STEELPROM has been manufacturing premium industrial products since 2019, serving international clients with quality and reliability." },
-      { property: "og:title", content: "About — STEELPROM" },
+      { title: "About — MCITY Special Vehicle Manufacturer" },
+      { name: "description", content: "MCITY (Machinery City) has manufactured special-purpose and municipal vehicles in Uzbekistan since 2019, serving clients with quality and reliability." },
+      { property: "og:title", content: "About — MCITY" },
       { property: "og:url", content: "/about" },
     ],
     links: [{ rel: "canonical", href: "/about" }],
@@ -30,7 +30,7 @@ function AboutPage() {
     <Layout>
       <PageHeader title={t("page.about.title")} subtitle={t("footer.about")} />
       <section className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2">
-        <img src={factory} alt="STEELPROM factory" width={1280} height={960} loading="lazy" className="rounded-sm object-cover shadow-elevated" />
+        <img src={factory} alt="MCITY factory" width={1280} height={960} loading="lazy" className="rounded-sm object-cover shadow-elevated" />
         <div>
           <div className="h-1 w-16 gradient-accent" />
           <h2 className="mt-5 font-display text-3xl font-extrabold uppercase">{t("since.title")}</h2>

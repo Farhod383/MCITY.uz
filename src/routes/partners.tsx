@@ -6,9 +6,9 @@ import { useLang } from "@/i18n/LanguageContext";
 export const Route = createFileRoute("/partners")({
   head: () => ({
     meta: [
-      { title: "Partners — STEELPROM" },
-      { name: "description", content: "STEELPROM partners with leading industrial companies across 18 countries." },
-      { property: "og:title", content: "Partners — STEELPROM" },
+      { title: "Partners — MCITY" },
+      { name: "description", content: "MCITY partners with leading industrial companies across 18 countries." },
+      { property: "og:title", content: "Partners — MCITY" },
       { property: "og:url", content: "/partners" },
     ],
     links: [{ rel: "canonical", href: "/partners" }],

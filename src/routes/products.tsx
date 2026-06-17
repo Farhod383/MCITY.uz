@@ -18,9 +18,9 @@ export const Route = createFileRoute("/products")({
   }),
   head: () => ({
     meta: [
-      { title: "Products Catalog — STEELPROM" },
-      { name: "description", content: "Browse the full STEELPROM industrial product catalog: pipes, machinery, electrical equipment and metal parts with technical specifications." },
-      { property: "og:title", content: "Products Catalog — STEELPROM" },
+      { title: "Products Catalog — MCITY" },
+      { name: "description", content: "Browse the full MCITY catalog of special-purpose and municipal vehicles: tankers, cranes, fire trucks, sweepers, ambulances and more with technical specifications." },
+      { property: "og:title", content: "Products Catalog — MCITY" },
       { property: "og:url", content: "/products" },
     ],
     links: [{ rel: "canonical", href: "/products" }],
@@ -54,7 +54,7 @@ function ProductsPage() {
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t("catalog.search")} className="pl-9" />
           </div>
-          <Button variant="outline" onClick={() => toast.info("PDF: STEELPROM-catalog-2025.pdf")}>
+          <Button variant="outline" onClick={() => toast.info("PDF: MCITY-catalog-2025.pdf")}>
             <FileDown className="h-4 w-4" /> {t("cta.downloadPdf")}
           </Button>
         </div>

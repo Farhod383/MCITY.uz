@@ -6,9 +6,9 @@ import { useLang } from "@/i18n/LanguageContext";
 export const Route = createFileRoute("/certificates")({
   head: () => ({
     meta: [
-      { title: "Certificates & Licenses — STEELPROM" },
-      { name: "description", content: "STEELPROM products are certified to international standards including ISO 9001, CE and GOST." },
-      { property: "og:title", content: "Certificates & Licenses — STEELPROM" },
+      { title: "Certificates & Licenses — MCITY" },
+      { name: "description", content: "MCITY products are certified to international standards including ISO 9001, CE and GOST." },
+      { property: "og:title", content: "Certificates & Licenses — MCITY" },
       { property: "og:url", content: "/certificates" },
     ],
     links: [{ rel: "canonical", href: "/certificates" }],

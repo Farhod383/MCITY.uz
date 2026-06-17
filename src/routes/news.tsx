@@ -2,16 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Calendar } from "lucide-react";
 import { Layout, PageHeader } from "@/components/layout/Layout";
 import { useLang } from "@/i18n/LanguageContext";
-import factory from "@/assets/factory-exterior.jpg";
-import machinery from "@/assets/cat-machinery.jpg";
-import parts from "@/assets/product-parts.jpg";
+import factory from "@/assets/mcity-hero.jpg";
+import machinery from "@/assets/veh-fire.jpg";
+import parts from "@/assets/veh-aerial.jpg";
 
 export const Route = createFileRoute("/news")({
   head: () => ({
     meta: [
-      { title: "News — STEELPROM" },
-      { name: "description", content: "Latest news, product launches and company updates from STEELPROM industrial manufacturing." },
-      { property: "og:title", content: "News — STEELPROM" },
+      { title: "News — MCITY" },
+      { name: "description", content: "Latest news, product launches and company updates from MCITY industrial manufacturing." },
+      { property: "og:title", content: "News — MCITY" },
       { property: "og:url", content: "/news" },
     ],
     links: [{ rel: "canonical", href: "/news" }],

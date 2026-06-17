@@ -12,7 +12,7 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
-    meta: [{ title: "Checkout — STEELPROM" }, { name: "robots", content: "noindex" }],
+    meta: [{ title: "Checkout — MCITY" }, { name: "robots", content: "noindex" }],
   }),
   component: CheckoutPage,
 });

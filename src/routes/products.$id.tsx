@@ -19,7 +19,7 @@ export const Route = createFileRoute("/products/$id")({
     const p = loaderData?.product;
     return {
       meta: [
-        { title: p ? `${p.name.en} — STEELPROM` : "Product — STEELPROM" },
+        { title: p ? `${p.name.en} — MCITY` : "Product — MCITY" },
         { name: "description", content: p?.description.en ?? "Industrial product details." },
         { property: "og:title", content: p?.name.en ?? "Product" },
         { property: "og:type", content: "product" },
