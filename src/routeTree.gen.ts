@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as StoreRouteImport } from './routes/store'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ProductsRouteImport } from './routes/products'
+import { Route as NewsRouteImport } from './routes/news'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CertificatesRouteImport } from './routes/certificates'
 import { Route as AboutRouteImport } from './routes/about'
@@ -31,6 +32,11 @@ const ProjectsRoute = ProjectsRouteImport.update({
 const ProductsRoute = ProductsRouteImport.update({
   id: '/products',
   path: '/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutRoute = CheckoutRouteImport.update({
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/certificates': typeof CertificatesRoute
   '/checkout': typeof CheckoutRoute
+  '/news': typeof NewsRoute
   '/products': typeof ProductsRouteWithChildren
   '/projects': typeof ProjectsRoute
   '/store': typeof StoreRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/certificates': typeof CertificatesRoute
   '/checkout': typeof CheckoutRoute
+  '/news': typeof NewsRoute
   '/products': typeof ProductsRouteWithChildren
   '/projects': typeof ProjectsRoute
   '/store': typeof StoreRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/certificates': typeof CertificatesRoute
   '/checkout': typeof CheckoutRoute
+  '/news': typeof NewsRoute
   '/products': typeof ProductsRouteWithChildren
   '/projects': typeof ProjectsRoute
   '/store': typeof StoreRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/certificates'
     | '/checkout'
+    | '/news'
     | '/products'
     | '/projects'
     | '/store'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/certificates'
     | '/checkout'
+    | '/news'
     | '/products'
     | '/projects'
     | '/store'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/certificates'
     | '/checkout'
+    | '/news'
     | '/products'
     | '/projects'
     | '/store'
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   CertificatesRoute: typeof CertificatesRoute
   CheckoutRoute: typeof CheckoutRoute
+  NewsRoute: typeof NewsRoute
   ProductsRoute: typeof ProductsRouteWithChildren
   ProjectsRoute: typeof ProjectsRoute
   StoreRoute: typeof StoreRoute
@@ -154,6 +167,13 @@ declare module '@tanstack/react-router' {
       path: '/products'
       fullPath: '/products'
       preLoaderRoute: typeof ProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout': {
@@ -211,6 +231,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   CertificatesRoute: CertificatesRoute,
   CheckoutRoute: CheckoutRoute,
+  NewsRoute: NewsRoute,
   ProductsRoute: ProductsRouteWithChildren,
   ProjectsRoute: ProjectsRoute,
   StoreRoute: StoreRoute,
