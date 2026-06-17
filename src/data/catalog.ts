@@ -29,7 +29,7 @@ export interface Product {
   description: Loc;
   image: string;
   gallery: string[];
-  priceUzs: number | null; // null = price on request
+  priceUzs?: number | null; // null/undefined = price on request
   bestseller?: boolean;
   specs: { label: Loc; value: string }[];
 }
