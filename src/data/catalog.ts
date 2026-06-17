@@ -37,12 +37,14 @@ export interface Product {
 const L = (uz: string, uzc: string, ru: string, en: string): Loc => ({ uz, uzc, ru, en });
 
 export const categories: Category[] = [
-  { id: "tank", name: L("Sisterna texnikasi", "Систерна техникаси", "Цистерны", "Tanker Vehicles"), image: fuelTanker },
+  { id: "fuel", name: L("Yoqilg'i quyish texnikasi", "Ёқилғи қуйиш техникаси", "Топливозаправочная техника", "Fuel Service Vehicles"), image: fuelTanker },
   { id: "municipal", name: L("Kommunal texnika", "Коммунал техника", "Коммунальная техника", "Municipal Vehicles"), image: sweeper },
-  { id: "lifting", name: L("Ko'tarish va yuk texnikasi", "Кўтариш ва юк техникаси", "Подъёмная техника", "Lifting & Cargo"), image: crane },
-  { id: "airport", name: L("Aeroport texnikasi", "Аэропорт техникаси", "Аэропортовая техника", "Airport Equipment"), image: ambulift },
-  { id: "emergency", name: L("Favqulodda xizmat texnikasi", "Фавқулодда хизмат техникаси", "Аварийно-спасательная техника", "Emergency Vehicles"), image: fire },
-  { id: "special", name: L("Maxsus texnika", "Махсус техника", "Специальная техника", "Special Vehicles"), image: workshop },
+  { id: "airport", name: L("Aeroport xizmat texnikasi", "Аэропорт хизмат техникаси", "Аэропортовая техника", "Airport Service Vehicles"), image: ambulift },
+  { id: "emergency", name: L("Favqulodda yordam texnikasi", "Фавқулодда ёрдам техникаси", "Аварийно-спасательная техника", "Emergency Response Vehicles"), image: ambulance },
+  { id: "fire", name: L("Yong'in o'chirish texnikasi", "Ёнғин ўчириш техникаси", "Пожарная техника", "Firefighting Vehicles"), image: fire },
+  { id: "lifting", name: L("Ko'tarish texnikasi", "Кўтариш техникаси", "Подъёмная техника", "Lifting Equipment"), image: crane },
+  { id: "utility", name: L("Kommunal-xizmat texnikasi", "Коммунал-хизмат техникаси", "Сервисная техника", "Utility Vehicles"), image: waterTanker },
+  { id: "special", name: L("Maxsus muhandislik texnikasi", "Махсус муҳандислик техникаси", "Специальная инженерная техника", "Special Engineering Vehicles"), image: workshop },
 ];
 
 const spec = (lbl: Loc, value: string) => ({ label: lbl, value });
@@ -54,7 +56,7 @@ const APP = L("Qo'llanilishi", "Қўлланилиши", "Применение",
 
 export const products: Product[] = [
   {
-    id: "fuel-tanker", categoryId: "tank", bestseller: true,
+    id: "fuel-tanker", categoryId: "fuel", bestseller: true,
     name: L("Avtotoplivozapravshik", "Автотопливозаправшик", "Автотопливозаправщик", "Fuel Tank Truck"),
     description: L(
       "Yoqilg'ini xavfsiz tashish va quyish uchun maxsus avtosisterna, hisoblagich va nasos tizimi bilan jihozlangan.",
@@ -90,7 +92,7 @@ export const products: Product[] = [
     specs: [spec(CAP, "6 000 – 12 000 L"), spec(CHS, "Isuzu / Howo"), spec(APP, "Kommunal")],
   },
   {
-    id: "drinking-water", categoryId: "tank",
+    id: "drinking-water", categoryId: "utility",
     name: L("Ichimlik suvi sisternasi", "Ичимлик суви систернаси", "Цистерна для питьевой воды", "Drinking Water Tanker"),
     description: L(
       "Ichimlik suvini gigiyenik tashish uchun zanglamaydigan po'latdan tayyorlangan izolyatsiyalangan sisterna.",
@@ -102,7 +104,7 @@ export const products: Product[] = [
     specs: [spec(CAP, "5 000 – 16 000 L"), spec(L("Material", "Материал", "Материал", "Material"), "AISI 304"), spec(CHS, "Universal")],
   },
   {
-    id: "milk-tanker", categoryId: "tank",
+    id: "milk-tanker", categoryId: "utility",
     name: L("Molokovoz", "Молоковоз", "Молоковоз", "Milk Tanker"),
     description: L(
       "Sutni sovuq holatda tashish uchun termoizolyatsiyalangan zanglamaydigan po'lat sisterna.",
@@ -114,7 +116,7 @@ export const products: Product[] = [
     specs: [spec(CAP, "4 000 – 18 000 L"), spec(L("Sektsiyalar", "Секциялар", "Секции", "Sections"), "1 – 3"), spec(L("Material", "Материал", "Материал", "Material"), "AISI 304")],
   },
   {
-    id: "technical-water", categoryId: "tank",
+    id: "technical-water", categoryId: "utility",
     name: L("Texnik suv sisternasi", "Техник сув систернаси", "Цистерна для технической воды", "Technical Water Tanker"),
     description: L(
       "Texnik suvni qurilish va sanoat maydonlariga yetkazib berish uchun avtosisterna.",
@@ -186,7 +188,7 @@ export const products: Product[] = [
     specs: [spec(L("Bunker", "Бункер", "Бункер", "Hopper"), "4 – 7 m³"), spec(L("Suv baki", "Сув баки", "Бак воды", "Water tank"), "1 000 – 2 000 L"), spec(CHS, "Isuzu")],
   },
   {
-    id: "chemical-tanker", categoryId: "tank",
+    id: "chemical-tanker", categoryId: "fuel",
     name: L("Kimyoviy moddalar tashuvchi sisterna", "Кимёвий моддалар ташувчи систерна", "Цистерна для перевозки химических веществ", "Chemical Tank Truck"),
     description: L(
       "Agressiv kimyoviy suyuqliklarni xavfsiz tashish uchun maxsus qoplamali avtosisterna (ADR).",
@@ -270,7 +272,7 @@ export const products: Product[] = [
     specs: [spec(APP, "Laboratoriya"), spec(L("Quvvat manbai", "Қувват манбаи", "Электропитание", "Power supply"), "Generator"), spec(CHS, "Universal")],
   },
   {
-    id: "fire-truck", categoryId: "emergency", bestseller: true,
+    id: "fire-truck", categoryId: "fire", bestseller: true,
     name: L("Yong'in o'chirish avtomobili", "Ёнғин ўчириш автомобили", "Пожарный автомобиль", "Fire Truck"),
     description: L(
       "Yong'inni o'chirish uchun suv-ko'pik tizimi va nasos bilan jihozlangan yong'in mashinasi.",
