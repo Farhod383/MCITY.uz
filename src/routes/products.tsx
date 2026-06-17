@@ -35,7 +35,7 @@ function ProductsPage() {
   const [query, setQuery] = useState(search.q ?? "");
   const activeCat = search.cat;
 
-  const setCat = (cat?: string) => navigate({ search: (p) => ({ ...p, cat }) });
+  const setCat = (cat?: string) => navigate({ search: (p: Search) => ({ ...p, cat }) });
 
   const filtered = products.filter((p) => {
     const matchCat = !activeCat || p.categoryId === activeCat;
