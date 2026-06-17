@@ -37,7 +37,7 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
         <Link to="/" className="flex shrink-0 items-center gap-2.5">
           <span className="grid h-9 w-9 place-items-center rounded-sm gradient-accent font-display text-lg font-extrabold text-accent-foreground">
-            S
+            M
           </span>
           <span className="font-display text-xl font-extrabold tracking-wide text-sidebar-foreground">
             {t("brand.name")}

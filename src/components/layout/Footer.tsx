@@ -17,7 +17,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
         <div className="md:col-span-1">
           <div className="flex items-center gap-2.5">
-            <span className="grid h-9 w-9 place-items-center rounded-sm gradient-accent font-display text-lg font-extrabold text-accent-foreground">S</span>
+            <span className="grid h-9 w-9 place-items-center rounded-sm gradient-accent font-display text-lg font-extrabold text-accent-foreground">M</span>
             <span className="font-display text-xl font-extrabold tracking-wide">{t("brand.name")}</span>
           </div>
           <p className="mt-4 text-sm leading-relaxed text-sidebar-foreground/70">{t("footer.about")}</p>
