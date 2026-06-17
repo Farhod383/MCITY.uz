@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StoreRouteImport } from './routes/store'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PartnersRouteImport } from './routes/partners'
@@ -24,6 +25,11 @@ import { Route as ProductsIdRouteImport } from './routes/products.$id'
 const StoreRoute = StoreRouteImport.update({
   id: '/store',
   path: '/store',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsRoute = ProjectsRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/partners': typeof PartnersRoute
   '/products': typeof ProductsRouteWithChildren
   '/projects': typeof ProjectsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/store': typeof StoreRoute
   '/products/$id': typeof ProductsIdRoute
 }
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/partners': typeof PartnersRoute
   '/products': typeof ProductsRouteWithChildren
   '/projects': typeof ProjectsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/store': typeof StoreRoute
   '/products/$id': typeof ProductsIdRoute
 }
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/partners': typeof PartnersRoute
   '/products': typeof ProductsRouteWithChildren
   '/projects': typeof ProjectsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/store': typeof StoreRoute
   '/products/$id': typeof ProductsIdRoute
 }
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/products'
     | '/projects'
+    | '/sitemap.xml'
     | '/store'
     | '/products/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/products'
     | '/projects'
+    | '/sitemap.xml'
     | '/store'
     | '/products/$id'
   id:
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/products'
     | '/projects'
+    | '/sitemap.xml'
     | '/store'
     | '/products/$id'
   fileRoutesById: FileRoutesById
@@ -169,6 +181,7 @@ export interface RootRouteChildren {
   PartnersRoute: typeof PartnersRoute
   ProductsRoute: typeof ProductsRouteWithChildren
   ProjectsRoute: typeof ProjectsRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StoreRoute: typeof StoreRoute
 }
 
@@ -179,6 +192,13 @@ declare module '@tanstack/react-router' {
       path: '/store'
       fullPath: '/store'
       preLoaderRoute: typeof StoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects': {
@@ -276,6 +296,7 @@ const rootRouteChildren: RootRouteChildren = {
   PartnersRoute: PartnersRoute,
   ProductsRoute: ProductsRouteWithChildren,
   ProjectsRoute: ProjectsRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   StoreRoute: StoreRoute,
 }
 export const routeTree = rootRouteImport
