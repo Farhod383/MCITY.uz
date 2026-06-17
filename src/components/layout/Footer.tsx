@@ -46,18 +46,18 @@ export function Footer() {
           <ul className="mt-4 space-y-3 text-sm text-sidebar-foreground/75">
             <li className="flex items-start gap-2.5"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" /> Toshkent sh., Sanoat ko'chasi 24, O'zbekiston</li>
             <li className="flex items-center gap-2.5"><Phone className="h-4 w-4 shrink-0 text-accent" /> +998 71 200 00 00</li>
-            <li className="flex items-center gap-2.5"><Mail className="h-4 w-4 shrink-0 text-accent" /> info@steelprom.uz</li>
+            <li className="flex items-center gap-2.5"><Mail className="h-4 w-4 shrink-0 text-accent" /> info@mcity.uz</li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-display text-lg font-bold uppercase tracking-wide text-accent">STEELPROM</h4>
+          <h4 className="font-display text-lg font-bold uppercase tracking-wide text-accent">MCITY</h4>
           <p className="mt-4 text-sm text-sidebar-foreground/70">{t("brand.tagline")} • EST. 2019</p>
         </div>
       </div>
       <div className="border-t border-sidebar-border">
         <div className="mx-auto max-w-7xl px-4 py-5 text-center text-xs text-sidebar-foreground/55 sm:px-6">
-          © {new Date().getFullYear()} STEELPROM. {t("footer.rights")}
+          © {new Date().getFullYear()} MCITY. {t("footer.rights")}
         </div>
       </div>
     </footer>

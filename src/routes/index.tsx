@@ -14,9 +14,9 @@ import factoryImg from "@/assets/factory-exterior.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "STEELPROM — Industrial Manufacturing & Online Store" },
+      { title: "MCITY — Industrial Manufacturing & Online Store" },
       { name: "description", content: "Premium industrial manufacturer since 2019. High-quality factory products, full catalog and online ordering for B2B and B2C clients worldwide." },
-      { property: "og:title", content: "STEELPROM — Industrial Manufacturing" },
+      { property: "og:title", content: "MCITY — Industrial Manufacturing" },
       { property: "og:description", content: "Premium industrial manufacturer since 2019. Catalog, technical specs and online ordering." },
       { property: "og:image", content: heroImg },
       { name: "twitter:image", content: heroImg },
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "Organization",
-        name: "STEELPROM",
+        name: "MCITY",
         foundingDate: "2019",
         industry: "Industrial Manufacturing",
         url: "/",

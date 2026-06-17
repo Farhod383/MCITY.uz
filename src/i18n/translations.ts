@@ -11,7 +11,7 @@ type Dict = Record<string, string>;
 
 export const translations: Record<Lang, Dict> = {
   uz: {
-    "brand.name": "STEELPROM",
+    "brand.name": "MCITY",
     "brand.tagline": "Sanoat ishlab chiqarish",
     "nav.home": "Bosh sahifa",
     "nav.about": "Kompaniya haqida",
@@ -102,7 +102,7 @@ export const translations: Record<Lang, Dict> = {
     "page.store.title": "Onlayn do'kon",
   },
   uzc: {
-    "brand.name": "STEELPROM",
+    "brand.name": "MCITY",
     "brand.tagline": "Саноат ишлаб чиқариш",
     "nav.home": "Бош саҳифа",
     "nav.about": "Компания ҳақида",
@@ -193,7 +193,7 @@ export const translations: Record<Lang, Dict> = {
     "page.store.title": "Онлайн дўкон",
   },
   ru: {
-    "brand.name": "STEELPROM",
+    "brand.name": "MCITY",
     "brand.tagline": "Промышленное производство",
     "nav.home": "Главная",
     "nav.about": "О компании",
@@ -284,7 +284,7 @@ export const translations: Record<Lang, Dict> = {
     "page.store.title": "Онлайн магазин",
   },
   en: {
-    "brand.name": "STEELPROM",
+    "brand.name": "MCITY",
     "brand.tagline": "Industrial Manufacturing",
     "nav.home": "Home",
     "nav.about": "About",

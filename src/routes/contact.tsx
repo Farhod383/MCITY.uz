@@ -11,9 +11,9 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — STEELPROM" },
-      { name: "description", content: "Contact STEELPROM for quotes, technical support and partnership inquiries. Phone, email and office address." },
-      { property: "og:title", content: "Contact — STEELPROM" },
+      { title: "Contact — MCITY" },
+      { name: "description", content: "Contact MCITY for quotes, technical support and partnership inquiries. Phone, email and office address." },
+      { property: "og:title", content: "Contact — MCITY" },
       { property: "og:url", content: "/contact" },
     ],
     links: [{ rel: "canonical", href: "/contact" }],
@@ -27,7 +27,7 @@ function ContactPage() {
   const info = [
     { Icon: MapPin, label: "Toshkent sh., Sanoat ko'chasi 24, O'zbekiston" },
     { Icon: Phone, label: "+998 71 200 00 00" },
-    { Icon: Mail, label: "info@steelprom.uz" },
+    { Icon: Mail, label: "info@mcity.uz" },
     { Icon: Clock, label: "Dush–Shan: 09:00 – 18:00" },
   ];
   return (

@@ -9,9 +9,9 @@ import parts from "@/assets/product-parts.jpg";
 export const Route = createFileRoute("/news")({
   head: () => ({
     meta: [
-      { title: "News — STEELPROM" },
-      { name: "description", content: "Latest news, product launches and company updates from STEELPROM industrial manufacturing." },
-      { property: "og:title", content: "News — STEELPROM" },
+      { title: "News — MCITY" },
+      { name: "description", content: "Latest news, product launches and company updates from MCITY industrial manufacturing." },
+      { property: "og:title", content: "News — MCITY" },
       { property: "og:url", content: "/news" },
     ],
     links: [{ rel: "canonical", href: "/news" }],

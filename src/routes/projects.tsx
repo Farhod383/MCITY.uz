@@ -9,9 +9,9 @@ import electrical from "@/assets/cat-electrical.jpg";
 export const Route = createFileRoute("/projects")({
   head: () => ({
     meta: [
-      { title: "Projects & Portfolio — STEELPROM" },
-      { name: "description", content: "Explore completed industrial projects and references delivered by STEELPROM for clients across multiple countries." },
-      { property: "og:title", content: "Projects & Portfolio — STEELPROM" },
+      { title: "Projects & Portfolio — MCITY" },
+      { name: "description", content: "Explore completed industrial projects and references delivered by MCITY for clients across multiple countries." },
+      { property: "og:title", content: "Projects & Portfolio — MCITY" },
       { property: "og:url", content: "/projects" },
     ],
     links: [{ rel: "canonical", href: "/projects" }],
