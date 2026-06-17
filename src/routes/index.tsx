@@ -8,16 +8,16 @@ import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { useLang } from "@/i18n/LanguageContext";
 import { categories, bestsellers } from "@/data/catalog";
-import heroImg from "@/assets/hero-factory.jpg";
-import factoryImg from "@/assets/factory-exterior.jpg";
+import heroImg from "@/assets/mcity-hero.jpg";
+import factoryImg from "@/assets/veh-crane.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MCITY — Industrial Manufacturing & Online Store" },
-      { name: "description", content: "Premium industrial manufacturer since 2019. High-quality factory products, full catalog and online ordering for B2B and B2C clients worldwide." },
-      { property: "og:title", content: "MCITY — Industrial Manufacturing" },
-      { property: "og:description", content: "Premium industrial manufacturer since 2019. Catalog, technical specs and online ordering." },
+      { title: "MCITY — Special Vehicle Manufacturer in Uzbekistan" },
+      { name: "description", content: "MCITY (Machinery City) manufactures special-purpose and municipal vehicles since 2019: tankers, cranes, fire trucks, sweepers and more. Full catalog and online ordering." },
+      { property: "og:title", content: "MCITY — Special Vehicle Manufacturer" },
+      { property: "og:description", content: "Special-purpose and municipal vehicles built in Uzbekistan since 2019. Catalog, technical specs and online ordering." },
       { property: "og:image", content: heroImg },
       { name: "twitter:image", content: heroImg },
     ],
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/")({
         "@type": "Organization",
         name: "MCITY",
         foundingDate: "2019",
-        industry: "Industrial Manufacturing",
+        industry: "Special Vehicle Manufacturing",
         url: "/",
       }),
     }],
@@ -62,7 +62,7 @@ function Index() {
     <Layout>
       {/* HERO */}
       <section className="relative isolate flex min-h-[88vh] items-center overflow-hidden">
-        <img src={heroImg} alt="Industrial factory production line" width={1920} height={1080} className="absolute inset-0 -z-10 h-full w-full object-cover" />
+        <img src={heroImg} alt="MCITY fleet of special-purpose trucks" width={1920} height={1080} className="absolute inset-0 -z-10 h-full w-full object-cover" />
         <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
         <div className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6">
           <div className="max-w-3xl animate-fade-up">
@@ -100,7 +100,7 @@ function Index() {
       {/* SINCE 2019 */}
       <section className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2">
         <div className="overflow-hidden rounded-sm shadow-elevated">
-          <img src={factoryImg} alt="Factory exterior" width={1280} height={960} loading="lazy" className="h-full w-full object-cover" />
+          <img src={factoryImg} alt="MCITY special vehicle" width={1280} height={960} loading="lazy" className="h-full w-full object-cover" />
         </div>
         <div>
           <div className="h-1 w-16 gradient-accent" />
