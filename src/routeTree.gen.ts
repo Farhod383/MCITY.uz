@@ -14,6 +14,7 @@ import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CertificatesRouteImport } from './routes/certificates'
 import { Route as AboutRouteImport } from './routes/about'
@@ -43,6 +44,11 @@ const PartnersRoute = PartnersRouteImport.update({
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutRoute = CheckoutRouteImport.update({
@@ -76,6 +82,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/certificates': typeof CertificatesRoute
   '/checkout': typeof CheckoutRoute
+  '/contact': typeof ContactRoute
   '/news': typeof NewsRoute
   '/partners': typeof PartnersRoute
   '/products': typeof ProductsRouteWithChildren
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/certificates': typeof CertificatesRoute
   '/checkout': typeof CheckoutRoute
+  '/contact': typeof ContactRoute
   '/news': typeof NewsRoute
   '/partners': typeof PartnersRoute
   '/products': typeof ProductsRouteWithChildren
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/certificates': typeof CertificatesRoute
   '/checkout': typeof CheckoutRoute
+  '/contact': typeof ContactRoute
   '/news': typeof NewsRoute
   '/partners': typeof PartnersRoute
   '/products': typeof ProductsRouteWithChildren
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/certificates'
     | '/checkout'
+    | '/contact'
     | '/news'
     | '/partners'
     | '/products'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/certificates'
     | '/checkout'
+    | '/contact'
     | '/news'
     | '/partners'
     | '/products'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/certificates'
     | '/checkout'
+    | '/contact'
     | '/news'
     | '/partners'
     | '/products'
@@ -152,6 +164,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   CertificatesRoute: typeof CertificatesRoute
   CheckoutRoute: typeof CheckoutRoute
+  ContactRoute: typeof ContactRoute
   NewsRoute: typeof NewsRoute
   PartnersRoute: typeof PartnersRoute
   ProductsRoute: typeof ProductsRouteWithChildren
@@ -194,6 +207,13 @@ declare module '@tanstack/react-router' {
       path: '/news'
       fullPath: '/news'
       preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout': {
@@ -251,6 +271,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   CertificatesRoute: CertificatesRoute,
   CheckoutRoute: CheckoutRoute,
+  ContactRoute: ContactRoute,
   NewsRoute: NewsRoute,
   PartnersRoute: PartnersRoute,
   ProductsRoute: ProductsRouteWithChildren,
