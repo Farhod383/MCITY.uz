@@ -60,7 +60,7 @@ function ProductDetail() {
             </div>
             {product.gallery.length > 1 && (
               <div className="mt-3 flex gap-3">
-                {product.gallery.map((g, i) => (
+                {product.gallery.map((g: string, i: number) => (
                   <button key={i} onClick={() => setActiveImg(i)} className={`h-20 w-20 overflow-hidden rounded-sm border-2 transition-colors ${activeImg === i ? "border-accent" : "border-border"}`}>
                     <img src={g} alt="" width={80} height={80} loading="lazy" className="h-full w-full object-cover" />
                   </button>
@@ -95,7 +95,7 @@ function ProductDetail() {
               <h2 className="font-display text-xl font-bold uppercase">{t("product.specs")}</h2>
               <table className="mt-4 w-full text-sm">
                 <tbody>
-                  {product.specs.map((s, i) => (
+                  {product.specs.map((s, i: number) => (
                     <tr key={i} className="border-b border-border">
                       <td className="py-3 pr-4 text-muted-foreground">{s.label[lang]}</td>
                       <td className="py-3 font-medium">{s.value}</td>
