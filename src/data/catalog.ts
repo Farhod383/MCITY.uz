@@ -359,3 +359,90 @@ export const products: Product[] = [
 
 export const getProduct = (id: string) => products.find((p) => p.id === id);
 export const bestsellers = products.filter((p) => p.bestseller);
+
+
+
+// ---------------------------------------------------------------------
+// Bosh sahifadagi raqamlar.
+// O'ZGARISH: "25+" -> "40+"; "8 / Texnika yo'nalishlari" olib tashlandi.
+// Bu ro'yxat Supabase ulanmagan holat uchun zaxira (fallback) hisoblanadi —
+// baza ulangach raqamlar site_stats jadvalidan olinadi.
+// ---------------------------------------------------------------------
+export interface Stat {
+  id: string;
+  value: string;
+  label: Loc;
+}
+
+export const stats: Stat[] = [
+  { id: "founded", value: "2019", label: L("Tashkil topgan", "Ташкил топган", "Год основания", "Established") },
+  { id: "models", value: "40+", label: L("Texnika modellari", "Техника моделлари", "Моделей техники", "Vehicle models") },
+  { id: "quality", value: "100%", label: L("Sifat nazorati", "Сифат назорати", "Контроль качества", "Quality control") },
+];
+
+// Supabase ulanmaganda ishlatiladigan zaxira nusxalar (aniqroq nom bilan)
+export const staticCategories = categories;
+export const staticProducts = products;
+export const staticStats = stats;
+
+
+// ---------------------------------------------------------------------
+// Sayt ma'lumotlari (footer va "Bog'lanish" sahifasi).
+// Bular admin panelidan tahrirlanadi; bu yerdagisi zaxira nusxa.
+// ---------------------------------------------------------------------
+export interface SiteSettings {
+  about: Loc;
+  address: Loc;
+  tagline: Loc;
+  /** Bir nechta telefon raqami — birinchisi asosiy hisoblanadi */
+  phones: string[];
+  email: string;
+  facebook: string;
+  instagram: string;
+  linkedin: string;
+  telegram: string;
+  /** Yuklab olinadigan PDF katalog (Supabase Storage havolasi) */
+  catalogPdfUrl: string;
+  /** Faylning asl nomi — admin panelda ko'rsatish uchun */
+  catalogPdfName: string;
+  /** Oxirgi marta qachon yuklangani */
+  catalogPdfUpdatedAt: string;
+  /** Xaritadagi aniq nuqta */
+  mapLat: number;
+  mapLng: number;
+  mapZoom: number;
+}
+
+export const staticSettings: SiteSettings = {
+  about: L(
+    "MCITY — 2019-yildan buyon O'zbekistonda maxsus va kommunal avtomobillar ishlab chiqaruvchi zavod.",
+    "MCITY — 2019-йилдан буён Ўзбекистонда махсус ва коммунал автомобиллар ишлаб чиқарувчи завод.",
+    "MCITY — завод по производству специальной и коммунальной техники в Узбекистане с 2019 года.",
+    "MCITY — a special-purpose and municipal vehicle manufacturer in Uzbekistan, operating since 2019.",
+  ),
+  address: L(
+    "Toshkent sh., Sanoat ko'chasi 24, O'zbekiston",
+    "Тошкент ш., Саноат кўчаси 24, Ўзбекистон",
+    "г. Ташкент, ул. Саноат 24, Узбекистан",
+    "Tashkent, Sanoat street 24, Uzbekistan",
+  ),
+  tagline: L(
+    "Maxsus texnika ishlab chiqarish",
+    "Махсус техника ишлаб чиқариш",
+    "Производство специальной техники",
+    "Special vehicle manufacturing",
+  ),
+  phones: ["+998 71 200 00 00"],
+  email: "info@mcity.uz",
+  facebook: "",
+  instagram: "",
+  linkedin: "",
+  telegram: "",
+  catalogPdfUrl: "",
+  catalogPdfName: "",
+  catalogPdfUpdatedAt: "",
+  // Toshkent markazi — aniq joy admin panelidan qo'yiladi
+  mapLat: 41.2995,
+  mapLng: 69.2401,
+  mapZoom: 15,
+};

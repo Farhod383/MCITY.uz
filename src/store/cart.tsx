@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { products, type Product } from "@/data/catalog";
+import { type Product } from "@/data/catalog";
+import { useCatalog } from "@/data/useCatalog";
 
 export interface CartItem {
   productId: string;
@@ -22,6 +23,7 @@ interface Ctx {
 const CartContext = createContext<Ctx | null>(null);
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const { products } = useCatalog();
   const [items, setItems] = useState<CartItem[]>([]);
   const [open, setOpen] = useState(false);
 
@@ -54,7 +56,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           return product ? { product, qty: i.qty } : null;
         })
         .filter(Boolean) as { product: Product; qty: number }[],
-    [items],
+    [items, products],
   );
 
   const count = items.reduce((a, i) => a + i.qty, 0);

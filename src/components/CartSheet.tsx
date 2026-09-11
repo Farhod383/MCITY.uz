@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { L } from "@/components/L";
 import { Trash2, Minus, Plus, ShoppingCart } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -49,7 +49,7 @@ export function CartSheet() {
                 <span className="font-display text-2xl font-bold">{formatPrice(totalUzs)}</span>
               </div>
               <Button asChild variant="industrial" className="w-full" onClick={() => setOpen(false)}>
-                <Link to="/checkout">{t("cart.checkout")}</Link>
+                <L page="checkout">{t("cart.checkout")}</L>
               </Button>
             </div>
           </>

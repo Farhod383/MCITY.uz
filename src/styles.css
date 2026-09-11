@@ -188,4 +188,52 @@
     from { opacity: 0; }
     to { opacity: 1; }
   }
+
+  /* ---------------------------------------------------------------
+     MCITY logotipi animatsiyasi
+     - sahifa ochilganda chapdan o'ngga ochilib chiqadi
+     - sichqoncha ustiga kelganda yengil kattalashadi va ko'k nur beradi
+     --------------------------------------------------------------- */
+  .logo-mark {
+    animation: logo-reveal 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), filter 0.35s ease;
+    will-change: transform, filter;
+  }
+
+  @keyframes logo-reveal {
+    from {
+      clip-path: inset(0 100% 0 0);
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  a:hover > .logo-mark,
+  .logo-link:hover .logo-mark {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 10px rgba(60, 58, 255, 0.75));
+  }
+
+  a:active > .logo-mark,
+  .logo-link:active .logo-mark {
+    transform: scale(0.98);
+  }
+
+  /* Harakatni kamaytirishni yoqqan foydalanuvchilar uchun */
+  @media (prefers-reduced-motion: reduce) {
+    .logo-mark {
+      animation: none;
+      transition: none;
+    }
+    a:hover > .logo-mark,
+    .logo-link:hover .logo-mark {
+      transform: none;
+      filter: none;
+    }
+  }
 }

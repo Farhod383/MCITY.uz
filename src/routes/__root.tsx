@@ -1,11 +1,12 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
-  Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
+  type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -15,6 +16,10 @@ import { LanguageProvider } from "@/i18n/LanguageContext";
 import { CartProvider } from "@/store/cart";
 import { CartSheet } from "@/components/CartSheet";
 import { Toaster } from "@/components/ui/sonner";
+import { DEFAULT_LANG, HTML_LANG, SITE_NAME, isLang } from "@/lib/site";
+import type { Lang } from "@/i18n/translations";
+import { AuthProvider } from "@/auth/AuthContext";
+import { HiddenLoginDialog } from "@/components/HiddenLoginDialog";
 
 function NotFoundComponent() {
   return (
@@ -26,19 +31,22 @@ function NotFoundComponent() {
           The page you're looking for doesn't exist or has been moved.
         </p>
         <div className="mt-6">
-          <Link
-            to="/"
+          <a
+            href={`/${DEFAULT_LANG}`}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Go home
-          </Link>
+            Bosh sahifaga qaytish
+          </a>
         </div>
       </div>
     </div>
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+// TanStack Router `error` ni `unknown` deb beradi — shuning uchun uni
+// Error ga keltiramiz (tsc xatosi shundan chiqayotgan edi).
+function ErrorComponent({ error: rawError, reset }: ErrorComponentProps) {
+  const error = rawError instanceof Error ? rawError : new Error(String(rawError));
   console.error(error);
   const router = useRouter();
   useEffect(() => {
@@ -81,14 +89,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      // Quyidagilar har bir sahifada o'z qiymati bilan almashtiriladi
+      { title: `${SITE_NAME} — Maxsus texnika ishlab chiqarish` },
+      {
+        name: "description",
+        content:
+          "MCITY — O'zbekistonda maxsus va kommunal texnika ishlab chiqaruvchi zavod.",
+      },
+      { name: "author", content: SITE_NAME },
+      { name: "theme-color", content: "#0a0a0a" },
+      { name: "format-detection", content: "telephone=no" },
     ],
     links: [
       {
@@ -110,8 +120,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  // <html lang="..."> manzildagi tilga qarab qo'yiladi — bu qidiruv
+  // tizimlari va ekran o'quvchilari uchun muhim
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const first = pathname.split("/").filter(Boolean)[0];
+  const lang: Lang = isLang(first) ? (first as Lang) : DEFAULT_LANG;
+
   return (
-    <html lang="en">
+    <html lang={HTML_LANG[lang]}>
       <head>
         <HeadContent />
       </head>
@@ -128,14 +144,17 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <CartProvider>
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-          <CartSheet />
-          <Toaster position="top-center" richColors />
-        </CartProvider>
-      </LanguageProvider>
+      <AuthProvider>
+        <LanguageProvider>
+          <CartProvider>
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+            <CartSheet />
+            <HiddenLoginDialog />
+            <Toaster position="top-center" richColors />
+          </CartProvider>
+        </LanguageProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

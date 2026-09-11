@@ -1,22 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Handshake } from "lucide-react";
 import { Layout, PageHeader } from "@/components/layout/Layout";
 import { useLang } from "@/i18n/LanguageContext";
 
-export const Route = createFileRoute("/partners")({
-  head: () => ({
-    meta: [
-      { title: "Partners — MCITY" },
-      { name: "description", content: "MCITY partners with leading industrial companies across 18 countries." },
-      { property: "og:title", content: "Partners — MCITY" },
-      { property: "og:url", content: "/partners" },
-    ],
-    links: [{ rel: "canonical", href: "/partners" }],
-  }),
-  component: PartnersPage,
-});
-
-function PartnersPage() {
+export function PartnersPage() {
   const { t } = useLang();
   const partners = ["TechBuild", "MetalGroup", "Global Industries", "UzSteel", "ProMash", "EcoEnergy", "MegaConstruct", "IndustrialPro", "SteelWorks", "PowerGrid", "MachineCorp", "BuildMaster"];
   return (

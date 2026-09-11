@@ -1,0 +1,22 @@
+# Repo ichida hamma matnli fayl LF (\n) bilan saqlanadi.
+# Windows'da ishlaganda Git ularni avtomatik CRLF ga o'giradi va
+# qaytarganda yana LF qiladi — shuning uchun "butun fayl o'zgardi"
+# degan soxta farqlar chiqmaydi.
+* text=auto eol=lf
+
+# Rasm va boshqa ikkilik fayllarga tegilmasin
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.zip   binary
+
+# SQL migratsiyalari ham oddiy matn
+*.sql text eol=lf

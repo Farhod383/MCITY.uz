@@ -1,4 +1,5 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { L } from "@/components/L";
+import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { CreditCard, Landmark, Wallet, ShoppingCart } from "lucide-react";
 import { Layout, PageHeader } from "@/components/layout/Layout";
@@ -10,20 +11,13 @@ import { useLang } from "@/i18n/LanguageContext";
 import { useCart } from "@/store/cart";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/checkout")({
-  head: () => ({
-    meta: [{ title: "Checkout — MCITY" }, { name: "robots", content: "noindex" }],
-  }),
-  component: CheckoutPage,
-});
-
 const payments = [
   { id: "card", Icon: CreditCard, label: "Visa / Mastercard / UzCard" },
   { id: "bank", Icon: Landmark, label: "Bank transfer" },
   { id: "cash", Icon: Wallet, label: "Cash / On delivery" },
 ];
 
-function CheckoutPage() {
+export function CheckoutPage() {
   const { t, lang, formatPrice } = useLang();
   const { detailed, totalUzs, clear, count } = useCart();
   const navigate = useNavigate();
@@ -33,7 +27,7 @@ function CheckoutPage() {
     e.preventDefault();
     toast.success(t("checkout.success"));
     clear();
-    setTimeout(() => navigate({ to: "/" }), 1500);
+    setTimeout(() => navigate({ to: "/$lang", params: { lang } }), 1500);
   };
 
   return (
@@ -44,7 +38,7 @@ function CheckoutPage() {
           <div className="flex flex-col items-center gap-4 py-20 text-center text-muted-foreground">
             <ShoppingCart className="h-14 w-14 opacity-40" />
             <p className="text-lg">{t("cart.empty")}</p>
-            <Button asChild variant="industrial"><Link to="/store">{t("nav.store")}</Link></Button>
+            <Button asChild variant="industrial"><L page="store">{t("nav.store")}</L></Button>
           </div>
         ) : (
           <form onSubmit={submit} className="grid gap-10 lg:grid-cols-[1fr_380px]">

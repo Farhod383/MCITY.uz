@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Link } from "@tanstack/react-router";
+import type { PageKey } from "@/lib/site";
+import { L } from "@/components/L";
+import { useRef, useState } from "react";
 import { Menu, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -11,49 +12,65 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useLang } from "@/i18n/LanguageContext";
 import { LANGS, type Lang } from "@/i18n/translations";
+import { useAuth } from "@/auth/AuthContext";
+import { Logo } from "@/components/Logo";
 
-const navItems: { to: string; key: string }[] = [
-  { to: "/", key: "nav.home" },
-  { to: "/about", key: "nav.about" },
-  { to: "/products", key: "nav.products" },
-  { to: "/projects", key: "nav.projects" },
-  { to: "/certificates", key: "nav.certificates" },
-  { to: "/news", key: "nav.news" },
-  { to: "/contact", key: "nav.contact" },
+const navItems: { page: PageKey; key: string }[] = [
+  { page: "home", key: "nav.home" },
+  { page: "about", key: "nav.about" },
+  { page: "catalog", key: "nav.products" },
+  { page: "projects", key: "nav.projects" },
+  { page: "certificates", key: "nav.certificates" },
+  { page: "news", key: "nav.news" },
+  { page: "contact", key: "nav.contact" },
 ];
 
 export function Header() {
   const { t, lang, setLang } = useLang();
+  const { setLoginOpen } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  /**
+   * Yashirin kirish: logotip TEZ IKKI MARTA bosilsa admin login oynasi ochiladi.
+   * Saytda hech qanday "Kirish" tugmasi ko'rinmaydi va logotipda hech qanday
+   * belgi yo'q — u oddiy logotipdek ishlaydi (bir marta bosilsa bosh sahifa).
+   */
+  const lastLogoClick = useRef(0);
+  const handleLogoClick = (e: React.MouseEvent) => {
+    const now = Date.now();
+    if (now - lastLogoClick.current < 400) {
+      e.preventDefault();
+      lastLogoClick.current = 0;
+      setLoginOpen(true);
+      return;
+    }
+    lastLogoClick.current = now;
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-surface-darker/90 backdrop-blur supports-[backdrop-filter]:bg-surface-darker/75">
       <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-4 px-4 sm:px-6">
-        <Link to="/" className="flex shrink-0 items-center gap-2.5">
-          <span className="grid h-9 w-9 place-items-center rounded-sm gradient-accent font-display text-lg font-extrabold text-accent-foreground">
-            M
-          </span>
-          <span className="flex flex-col leading-none">
-            <span className="font-display text-xl font-extrabold tracking-[0.18em] text-sidebar-foreground">
-              {t("brand.name")}
-            </span>
-            <span className="mt-0.5 text-[10px] uppercase tracking-[0.25em] text-sidebar-foreground/45">
-              Special Vehicles
-            </span>
-          </span>
-        </Link>
+        <L
+          page="home"
+          onClick={handleLogoClick}
+          onDoubleClick={(e) => e.preventDefault()}
+          aria-label={t("brand.name")}
+          className="logo-link flex shrink-0 select-none items-center"
+        >
+          <Logo className="h-10 w-auto text-white sm:h-12" />
+        </L>
 
         <nav className="ml-6 hidden flex-1 items-center gap-0.5 xl:flex">
           {navItems.map((n) => (
-            <Link
-              key={n.to}
-              to={n.to}
-              activeOptions={{ exact: n.to === "/" }}
+            <L
+              key={n.page}
+              page={n.page}
+              activeOptions={{ exact: n.page === "home" }}
               className="rounded-sm px-3 py-2 text-[13px] font-semibold uppercase tracking-wide text-sidebar-foreground/70 transition-colors hover:text-white"
               activeProps={{ className: "text-white" }}
             >
               {t(n.key)}
-            </Link>
+            </L>
           ))}
         </nav>
 
@@ -77,7 +94,7 @@ export function Header() {
 
           {/* CTA */}
           <Button asChild variant="outlineLight" size="sm" className="hidden h-9 lg:inline-flex">
-            <Link to="/contact">{t("cta.quote")}</Link>
+            <L page="contact">{t("cta.quote")}</L>
           </Button>
 
           {/* Mobile menu */}
@@ -90,19 +107,19 @@ export function Header() {
             <SheetContent side="right" className="w-72 bg-surface-dark text-sidebar-foreground">
               <nav className="mt-8 flex flex-col gap-1">
                 {navItems.map((n) => (
-                  <Link
-                    key={n.to}
-                    to={n.to}
+                  <L
+                    key={n.page}
+                    page={n.page}
                     onClick={() => setMobileOpen(false)}
                     className="rounded-sm px-3 py-3 text-base font-semibold uppercase tracking-wide text-sidebar-foreground/85 transition-colors hover:bg-sidebar-accent hover:text-white"
                     activeProps={{ className: "text-white bg-sidebar-accent" }}
-                    activeOptions={{ exact: n.to === "/" }}
+                    activeOptions={{ exact: n.page === "home" }}
                   >
                     {t(n.key)}
-                  </Link>
+                  </L>
                 ))}
                 <Button asChild variant="industrial" size="lg" className="mt-4">
-                  <Link to="/contact" onClick={() => setMobileOpen(false)}>{t("cta.quote")}</Link>
+                  <L page="contact" onClick={() => setMobileOpen(false)}>{t("cta.quote")}</L>
                 </Button>
               </nav>
             </SheetContent>

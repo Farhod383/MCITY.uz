@@ -1,5 +1,7 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { useRouter, useRouterState } from "@tanstack/react-router";
 import { translations, type Lang } from "./translations";
+import { DEFAULT_LANG, isLang, parsePath, pathFor } from "@/lib/site";
 
 export type Currency = "UZS" | "USD" | "RUB";
 
@@ -18,31 +20,66 @@ interface Ctx {
 const LanguageContext = createContext<Ctx | null>(null);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("uz");
+  const router = useRouter();
+
+  /**
+   * Til endi MANZILDAN olinadi (/uz, /ru, /en, /uzc), localStorage'dan emas.
+   *
+   * Sabab: qidiruv tizimlari uchun har bir tilning o'z URL'i bo'lishi shart.
+   * Manzildan o'qilgani uchun server tomonda ham (SSR) to'g'ri til bilan
+   * chiziladi — Google birinchi so'rovdayoq to'g'ri matnni ko'radi.
+   */
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  const lang: Lang = useMemo(() => {
+    const first = pathname.split("/").filter(Boolean)[0];
+    return isLang(first) ? (first as Lang) : DEFAULT_LANG;
+  }, [pathname]);
+
   const [currency, setCurrencyState] = useState<Currency>("UZS");
 
   useEffect(() => {
-    const l = localStorage.getItem("lang") as Lang | null;
-    const c = localStorage.getItem("currency") as Currency | null;
-    if (l) setLangState(l);
-    if (c) setCurrencyState(c);
+    try {
+      const c = localStorage.getItem("currency") as Currency | null;
+      if (c) setCurrencyState(c);
+    } catch {
+      /* private rejimda localStorage ishlamasligi mumkin */
+    }
   }, []);
 
-  const setLang = (l: Lang) => {
-    setLangState(l);
-    localStorage.setItem("lang", l);
-  };
+  // Tanlangan tilni eslab qolamiz (faqat qulaylik uchun)
+  useEffect(() => {
+    try {
+      localStorage.setItem("lang", lang);
+    } catch {
+      /* ignore */
+    }
+  }, [lang]);
+
   const setCurrency = (c: Currency) => {
     setCurrencyState(c);
-    localStorage.setItem("currency", c);
+    try {
+      localStorage.setItem("currency", c);
+    } catch {
+      /* ignore */
+    }
+  };
+
+  /** Tilni almashtirish = shu sahifaning boshqa tildagi manziliga o'tish */
+  const setLang = (next: Lang) => {
+    if (next === lang) return;
+    const { page, productSlug } = parsePath(pathname);
+    void router.navigate({ to: pathFor(next, page, productSlug) });
   };
 
   const t = (key: string) => translations[lang][key] ?? translations.en[key] ?? key;
 
   const formatPrice = (uzs: number) => {
     const val = uzs * RATES[currency];
-    if (currency === "USD") return `${SYMBOL.USD}${val.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
-    if (currency === "RUB") return `${val.toLocaleString("ru-RU", { maximumFractionDigits: 0 })} ${SYMBOL.RUB}`;
+    if (currency === "USD")
+      return `${SYMBOL.USD}${val.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+    if (currency === "RUB")
+      return `${val.toLocaleString("ru-RU", { maximumFractionDigits: 0 })} ${SYMBOL.RUB}`;
     return `${val.toLocaleString("ru-RU", { maximumFractionDigits: 0 })} ${SYMBOL.UZS}`;
   };
 

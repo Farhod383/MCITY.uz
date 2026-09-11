@@ -9,22 +9,35 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as StoreRouteImport } from './routes/store'
+import { Route as LangRouteImport } from './routes/$lang'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ProjectsRouteImport } from './routes/projects'
-import { Route as ProductsRouteImport } from './routes/products'
-import { Route as PartnersRouteImport } from './routes/partners'
-import { Route as NewsRouteImport } from './routes/news'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as CheckoutRouteImport } from './routes/checkout'
-import { Route as CertificatesRouteImport } from './routes/certificates'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProductsIdRouteImport } from './routes/products.$id'
+import { Route as LangIndexRouteImport } from './routes/$lang.index'
+import { Route as LangAboutRouteImport } from './routes/$lang.about'
+import { Route as LangCertificatesRouteImport } from './routes/$lang.certificates'
+import { Route as LangCheckoutRouteImport } from './routes/$lang.checkout'
+import { Route as LangContactRouteImport } from './routes/$lang.contact'
+import { Route as LangNewsRouteImport } from './routes/$lang.news'
+import { Route as LangPartnersRouteImport } from './routes/$lang.partners'
+import { Route as LangProjectsRouteImport } from './routes/$lang.projects'
+import { Route as LangStoreRouteImport } from './routes/$lang.store'
+import { Route as LangCatalogIndexRouteImport } from './routes/$lang.$catalog.index'
+import { Route as LangCatalogIdRouteImport } from './routes/$lang.$catalog.$id'
 
-const StoreRoute = StoreRouteImport.update({
-  id: '/store',
-  path: '/store',
+const LangRoute = LangRouteImport.update({
+  id: '/$lang',
+  path: '/$lang',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -32,166 +45,194 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProjectsRoute = ProjectsRouteImport.update({
-  id: '/projects',
-  path: '/projects',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductsRoute = ProductsRouteImport.update({
-  id: '/products',
-  path: '/products',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PartnersRoute = PartnersRouteImport.update({
-  id: '/partners',
-  path: '/partners',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NewsRoute = NewsRouteImport.update({
-  id: '/news',
-  path: '/news',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CheckoutRoute = CheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CertificatesRoute = CertificatesRouteImport.update({
-  id: '/certificates',
-  path: '/certificates',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
+const LangIndexRoute = LangIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => LangRoute,
 } as any)
-const ProductsIdRoute = ProductsIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ProductsRoute,
+const LangAboutRoute = LangAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangCertificatesRoute = LangCertificatesRouteImport.update({
+  id: '/certificates',
+  path: '/certificates',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangCheckoutRoute = LangCheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangContactRoute = LangContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangNewsRoute = LangNewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangPartnersRoute = LangPartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangProjectsRoute = LangProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangStoreRoute = LangStoreRouteImport.update({
+  id: '/store',
+  path: '/store',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangCatalogIndexRoute = LangCatalogIndexRouteImport.update({
+  id: '/$catalog/',
+  path: '/$catalog/',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangCatalogIdRoute = LangCatalogIdRouteImport.update({
+  id: '/$catalog/$id',
+  path: '/$catalog/$id',
+  getParentRoute: () => LangRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/certificates': typeof CertificatesRoute
-  '/checkout': typeof CheckoutRoute
-  '/contact': typeof ContactRoute
-  '/news': typeof NewsRoute
-  '/partners': typeof PartnersRoute
-  '/products': typeof ProductsRouteWithChildren
-  '/projects': typeof ProjectsRoute
+  '/$lang': typeof LangRouteWithChildren
+  '/admin': typeof AdminRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/store': typeof StoreRoute
-  '/products/$id': typeof ProductsIdRoute
+  '/$lang/about': typeof LangAboutRoute
+  '/$lang/certificates': typeof LangCertificatesRoute
+  '/$lang/checkout': typeof LangCheckoutRoute
+  '/$lang/contact': typeof LangContactRoute
+  '/$lang/news': typeof LangNewsRoute
+  '/$lang/partners': typeof LangPartnersRoute
+  '/$lang/projects': typeof LangProjectsRoute
+  '/$lang/store': typeof LangStoreRoute
+  '/$lang/': typeof LangIndexRoute
+  '/$lang/$catalog/$id': typeof LangCatalogIdRoute
+  '/$lang/$catalog/': typeof LangCatalogIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/certificates': typeof CertificatesRoute
-  '/checkout': typeof CheckoutRoute
-  '/contact': typeof ContactRoute
-  '/news': typeof NewsRoute
-  '/partners': typeof PartnersRoute
-  '/products': typeof ProductsRouteWithChildren
-  '/projects': typeof ProjectsRoute
+  '/admin': typeof AdminRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/store': typeof StoreRoute
-  '/products/$id': typeof ProductsIdRoute
+  '/$lang/about': typeof LangAboutRoute
+  '/$lang/certificates': typeof LangCertificatesRoute
+  '/$lang/checkout': typeof LangCheckoutRoute
+  '/$lang/contact': typeof LangContactRoute
+  '/$lang/news': typeof LangNewsRoute
+  '/$lang/partners': typeof LangPartnersRoute
+  '/$lang/projects': typeof LangProjectsRoute
+  '/$lang/store': typeof LangStoreRoute
+  '/$lang': typeof LangIndexRoute
+  '/$lang/$catalog/$id': typeof LangCatalogIdRoute
+  '/$lang/$catalog': typeof LangCatalogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/certificates': typeof CertificatesRoute
-  '/checkout': typeof CheckoutRoute
-  '/contact': typeof ContactRoute
-  '/news': typeof NewsRoute
-  '/partners': typeof PartnersRoute
-  '/products': typeof ProductsRouteWithChildren
-  '/projects': typeof ProjectsRoute
+  '/$lang': typeof LangRouteWithChildren
+  '/admin': typeof AdminRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/store': typeof StoreRoute
-  '/products/$id': typeof ProductsIdRoute
+  '/$lang/about': typeof LangAboutRoute
+  '/$lang/certificates': typeof LangCertificatesRoute
+  '/$lang/checkout': typeof LangCheckoutRoute
+  '/$lang/contact': typeof LangContactRoute
+  '/$lang/news': typeof LangNewsRoute
+  '/$lang/partners': typeof LangPartnersRoute
+  '/$lang/projects': typeof LangProjectsRoute
+  '/$lang/store': typeof LangStoreRoute
+  '/$lang/': typeof LangIndexRoute
+  '/$lang/$catalog/$id': typeof LangCatalogIdRoute
+  '/$lang/$catalog/': typeof LangCatalogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/about'
-    | '/certificates'
-    | '/checkout'
-    | '/contact'
-    | '/news'
-    | '/partners'
-    | '/products'
-    | '/projects'
+    | '/$lang'
+    | '/admin'
+    | '/robots.txt'
     | '/sitemap.xml'
-    | '/store'
-    | '/products/$id'
+    | '/$lang/about'
+    | '/$lang/certificates'
+    | '/$lang/checkout'
+    | '/$lang/contact'
+    | '/$lang/news'
+    | '/$lang/partners'
+    | '/$lang/projects'
+    | '/$lang/store'
+    | '/$lang/'
+    | '/$lang/$catalog/$id'
+    | '/$lang/$catalog/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/about'
-    | '/certificates'
-    | '/checkout'
-    | '/contact'
-    | '/news'
-    | '/partners'
-    | '/products'
-    | '/projects'
+    | '/admin'
+    | '/robots.txt'
     | '/sitemap.xml'
-    | '/store'
-    | '/products/$id'
+    | '/$lang/about'
+    | '/$lang/certificates'
+    | '/$lang/checkout'
+    | '/$lang/contact'
+    | '/$lang/news'
+    | '/$lang/partners'
+    | '/$lang/projects'
+    | '/$lang/store'
+    | '/$lang'
+    | '/$lang/$catalog/$id'
+    | '/$lang/$catalog'
   id:
     | '__root__'
-    | '/'
-    | '/about'
-    | '/certificates'
-    | '/checkout'
-    | '/contact'
-    | '/news'
-    | '/partners'
-    | '/products'
-    | '/projects'
+    | '/$lang'
+    | '/admin'
+    | '/robots.txt'
     | '/sitemap.xml'
-    | '/store'
-    | '/products/$id'
+    | '/$lang/about'
+    | '/$lang/certificates'
+    | '/$lang/checkout'
+    | '/$lang/contact'
+    | '/$lang/news'
+    | '/$lang/partners'
+    | '/$lang/projects'
+    | '/$lang/store'
+    | '/$lang/'
+    | '/$lang/$catalog/$id'
+    | '/$lang/$catalog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  CertificatesRoute: typeof CertificatesRoute
-  CheckoutRoute: typeof CheckoutRoute
-  ContactRoute: typeof ContactRoute
-  NewsRoute: typeof NewsRoute
-  PartnersRoute: typeof PartnersRoute
-  ProductsRoute: typeof ProductsRouteWithChildren
-  ProjectsRoute: typeof ProjectsRoute
+  LangRoute: typeof LangRouteWithChildren
+  AdminRoute: typeof AdminRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  StoreRoute: typeof StoreRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/store': {
-      id: '/store'
-      path: '/store'
-      fullPath: '/store'
-      preLoaderRoute: typeof StoreRouteImport
+    '/$lang': {
+      id: '/$lang'
+      path: '/$lang'
+      fullPath: '/$lang'
+      preLoaderRoute: typeof LangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -201,104 +242,132 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/projects': {
-      id: '/projects'
-      path: '/projects'
-      fullPath: '/projects'
-      preLoaderRoute: typeof ProjectsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/products': {
-      id: '/products'
-      path: '/products'
-      fullPath: '/products'
-      preLoaderRoute: typeof ProductsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/partners': {
-      id: '/partners'
-      path: '/partners'
-      fullPath: '/partners'
-      preLoaderRoute: typeof PartnersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/news': {
-      id: '/news'
-      path: '/news'
-      fullPath: '/news'
-      preLoaderRoute: typeof NewsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/checkout': {
-      id: '/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof CheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/certificates': {
-      id: '/certificates'
-      path: '/certificates'
-      fullPath: '/certificates'
-      preLoaderRoute: typeof CertificatesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
+    '/$lang/': {
+      id: '/$lang/'
       path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/$lang/'
+      preLoaderRoute: typeof LangIndexRouteImport
+      parentRoute: typeof LangRoute
     }
-    '/products/$id': {
-      id: '/products/$id'
-      path: '/$id'
-      fullPath: '/products/$id'
-      preLoaderRoute: typeof ProductsIdRouteImport
-      parentRoute: typeof ProductsRoute
+    '/$lang/about': {
+      id: '/$lang/about'
+      path: '/about'
+      fullPath: '/$lang/about'
+      preLoaderRoute: typeof LangAboutRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/certificates': {
+      id: '/$lang/certificates'
+      path: '/certificates'
+      fullPath: '/$lang/certificates'
+      preLoaderRoute: typeof LangCertificatesRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/checkout': {
+      id: '/$lang/checkout'
+      path: '/checkout'
+      fullPath: '/$lang/checkout'
+      preLoaderRoute: typeof LangCheckoutRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/contact': {
+      id: '/$lang/contact'
+      path: '/contact'
+      fullPath: '/$lang/contact'
+      preLoaderRoute: typeof LangContactRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/news': {
+      id: '/$lang/news'
+      path: '/news'
+      fullPath: '/$lang/news'
+      preLoaderRoute: typeof LangNewsRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/partners': {
+      id: '/$lang/partners'
+      path: '/partners'
+      fullPath: '/$lang/partners'
+      preLoaderRoute: typeof LangPartnersRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/projects': {
+      id: '/$lang/projects'
+      path: '/projects'
+      fullPath: '/$lang/projects'
+      preLoaderRoute: typeof LangProjectsRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/store': {
+      id: '/$lang/store'
+      path: '/store'
+      fullPath: '/$lang/store'
+      preLoaderRoute: typeof LangStoreRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/$catalog/': {
+      id: '/$lang/$catalog/'
+      path: '/$catalog'
+      fullPath: '/$lang/$catalog/'
+      preLoaderRoute: typeof LangCatalogIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/$catalog/$id': {
+      id: '/$lang/$catalog/$id'
+      path: '/$catalog/$id'
+      fullPath: '/$lang/$catalog/$id'
+      preLoaderRoute: typeof LangCatalogIdRouteImport
+      parentRoute: typeof LangRoute
     }
   }
 }
 
-interface ProductsRouteChildren {
-  ProductsIdRoute: typeof ProductsIdRoute
+interface LangRouteChildren {
+  LangAboutRoute: typeof LangAboutRoute
+  LangCertificatesRoute: typeof LangCertificatesRoute
+  LangCheckoutRoute: typeof LangCheckoutRoute
+  LangContactRoute: typeof LangContactRoute
+  LangNewsRoute: typeof LangNewsRoute
+  LangPartnersRoute: typeof LangPartnersRoute
+  LangProjectsRoute: typeof LangProjectsRoute
+  LangStoreRoute: typeof LangStoreRoute
+  LangIndexRoute: typeof LangIndexRoute
+  LangCatalogIdRoute: typeof LangCatalogIdRoute
+  LangCatalogIndexRoute: typeof LangCatalogIndexRoute
 }
 
-const ProductsRouteChildren: ProductsRouteChildren = {
-  ProductsIdRoute: ProductsIdRoute,
+const LangRouteChildren: LangRouteChildren = {
+  LangAboutRoute: LangAboutRoute,
+  LangCertificatesRoute: LangCertificatesRoute,
+  LangCheckoutRoute: LangCheckoutRoute,
+  LangContactRoute: LangContactRoute,
+  LangNewsRoute: LangNewsRoute,
+  LangPartnersRoute: LangPartnersRoute,
+  LangProjectsRoute: LangProjectsRoute,
+  LangStoreRoute: LangStoreRoute,
+  LangIndexRoute: LangIndexRoute,
+  LangCatalogIdRoute: LangCatalogIdRoute,
+  LangCatalogIndexRoute: LangCatalogIndexRoute,
 }
 
-const ProductsRouteWithChildren = ProductsRoute._addFileChildren(
-  ProductsRouteChildren,
-)
+const LangRouteWithChildren = LangRoute._addFileChildren(LangRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  CertificatesRoute: CertificatesRoute,
-  CheckoutRoute: CheckoutRoute,
-  ContactRoute: ContactRoute,
-  NewsRoute: NewsRoute,
-  PartnersRoute: PartnersRoute,
-  ProductsRoute: ProductsRouteWithChildren,
-  ProjectsRoute: ProjectsRoute,
+  LangRoute: LangRouteWithChildren,
+  AdminRoute: AdminRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  StoreRoute: StoreRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

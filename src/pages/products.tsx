@@ -1,4 +1,3 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Search, SlidersHorizontal, FileDown } from "lucide-react";
 import { Layout, PageHeader } from "@/components/layout/Layout";
@@ -6,36 +5,34 @@ import { ProductCard } from "@/components/ProductCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/i18n/LanguageContext";
-import { categories, products } from "@/data/catalog";
-import { toast } from "sonner";
+import { useCatalog } from "@/data/useCatalog";
 
-type Search = { cat?: string; q?: string };
+export interface CatalogSearch {
+  cat?: string;
+  q?: string;
+}
 
-export const Route = createFileRoute("/products")({
-  validateSearch: (s: Record<string, unknown>): Search => ({
-    cat: typeof s.cat === "string" ? s.cat : undefined,
-    q: typeof s.q === "string" ? s.q : undefined,
-  }),
-  head: () => ({
-    meta: [
-      { title: "Products Catalog — MCITY" },
-      { name: "description", content: "Browse the full MCITY catalog of special-purpose and municipal vehicles: tankers, cranes, fire trucks, sweepers, ambulances and more with technical specifications." },
-      { property: "og:title", content: "Products Catalog — MCITY" },
-      { property: "og:url", content: "/products" },
-    ],
-    links: [{ rel: "canonical", href: "/products" }],
-  }),
-  component: ProductsPage,
-});
-
-function ProductsPage() {
+/**
+ * Katalog sahifasi. Filtr holati manzil satridagi `?cat=` va `?q=` orqali
+ * boshqariladi — marshrut fayli ularni props sifatida uzatadi.
+ */
+export function ProductsPage({
+  search,
+  onSearchChange,
+  heading,
+  subheading,
+}: {
+  search: CatalogSearch;
+  onSearchChange: (next: CatalogSearch) => void;
+  heading?: string;
+  subheading?: string;
+}) {
   const { t, lang } = useLang();
-  const search = Route.useSearch();
-  const navigate = useNavigate({ from: "/products" });
+  const { categories, products, settings } = useCatalog();
   const [query, setQuery] = useState(search.q ?? "");
   const activeCat = search.cat;
 
-  const setCat = (cat?: string) => navigate({ search: (p: Search) => ({ ...p, cat }) });
+  const setCat = (cat?: string) => onSearchChange({ ...search, cat });
 
   const filtered = products.filter((p) => {
     const matchCat = !activeCat || p.categoryId === activeCat;
@@ -46,7 +43,7 @@ function ProductsPage() {
 
   return (
     <Layout>
-      <PageHeader title={t("nav.products")} subtitle={t("categories.subtitle")} />
+      <PageHeader title={heading ?? t("nav.products")} subtitle={subheading ?? t("categories.subtitle")} />
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
         {/* Toolbar */}
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -54,9 +51,21 @@ function ProductsPage() {
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t("catalog.search")} className="pl-9" />
           </div>
-          <Button variant="outline" onClick={() => toast.info("PDF: MCITY-catalog-2025.pdf")}>
-            <FileDown className="h-4 w-4" /> {t("cta.downloadPdf")}
-          </Button>
+          {/* PDF katalog admin paneldan yuklanadi.
+              Fayl yuklanmagan bo'lsa tugma umuman ko'rinmaydi —
+              ishlamaydigan tugma ko'rsatishdan ko'ra shunisi yaxshi. */}
+          {settings.catalogPdfUrl && (
+            <Button variant="outline" asChild>
+              <a
+                href={settings.catalogPdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                download={settings.catalogPdfName || "MCITY-katalog.pdf"}
+              >
+                <FileDown className="h-4 w-4" /> {t("cta.downloadPdf")}
+              </a>
+            </Button>
+          )}
         </div>
 
         {/* Category filter chips */}

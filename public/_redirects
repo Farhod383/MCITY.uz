@@ -1,0 +1,20 @@
+# Cloudflare Pages / Netlify uchun yo'naltirishlar.
+# ESLATMA: asosiy yo'naltirishlar `src/server.ts` ichida ham bor,
+# shuning uchun bu fayl faqat qo'shimcha himoya qatlami.
+# Boshqa hostingda bu fayl e'tiborsiz qoladi.
+
+# www -> asosiy domen
+https://www.mcity.uz/*    https://mcity.uz/:splat    301!
+
+# Eski, tilsiz manzillar -> yangi tilli manzillar
+/                         /uz                        301
+/about                    /uz/about                  301
+/products                 /uz/maxsus-texnika         301
+/products/*               /uz/maxsus-texnika/:splat  301
+/projects                 /uz/projects               301
+/certificates             /uz/certificates           301
+/news                     /uz/news                   301
+/partners                 /uz/partners               301
+/contact                  /uz/contact                301
+/store                    /uz/store                  301
+/checkout                 /uz/checkout               301

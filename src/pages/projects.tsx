@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Layout, PageHeader } from "@/components/layout/Layout";
 import { useLang } from "@/i18n/LanguageContext";
 import hero from "@/assets/mcity-hero.jpg";
@@ -6,20 +5,7 @@ import factory from "@/assets/veh-fuel-tanker.jpg";
 import machinery from "@/assets/veh-crane.jpg";
 import electrical from "@/assets/veh-sewer-truck.jpg";
 
-export const Route = createFileRoute("/projects")({
-  head: () => ({
-    meta: [
-      { title: "Projects & Portfolio — MCITY" },
-      { name: "description", content: "Explore completed industrial projects and references delivered by MCITY for clients across multiple countries." },
-      { property: "og:title", content: "Projects & Portfolio — MCITY" },
-      { property: "og:url", content: "/projects" },
-    ],
-    links: [{ rel: "canonical", href: "/projects" }],
-  }),
-  component: ProjectsPage,
-});
-
-function ProjectsPage() {
+export function ProjectsPage() {
   const { t, lang } = useLang();
   const projects = [
     { img: factory, year: "2024", title: { uz: "Toshkent zavod kengaytmasi", uzc: "Тошкент завод кенгайтмаси", ru: "Расширение завода в Ташкенте", en: "Tashkent Plant Expansion" } },

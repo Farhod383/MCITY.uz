@@ -1,0 +1,59 @@
+# MCITY sayti — systemd xizmati
+#
+# Bu fayl serverni "uxlab qolmaydigan" qiladi:
+#   Restart=always     -> jarayon o'lsa, 3 soniyada qayta ko'tariladi
+#   WantedBy=multi-user.target -> server qayta yuklansa, o'zi ishga tushadi
+#
+# Joyi: /etc/systemd/system/mcity.service
+# Buyruqlar:
+#   sudo systemctl status mcity
+#   sudo systemctl restart mcity
+#   sudo journalctl -u mcity -f      (jonli loglar)
+
+[Unit]
+Description=MCITY.UZ sayti (TanStack Start / Node)
+Documentation=https://github.com/Farhod383/Mcity_siyt
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=mcity
+Group=mcity
+WorkingDirectory=/opt/mcity/app
+
+# Sayt 127.0.0.1:3000 da turadi — tashqariga to'g'ridan-to'g'ri chiqmaydi.
+# Tashqi 80/443 portlarni nginx ushlaydi va shu yerga uzatadi.
+Environment=NODE_ENV=production
+Environment=HOST=127.0.0.1
+Environment=PORT=3000
+EnvironmentFile=/opt/mcity/app/.env.production
+
+ExecStart=/usr/bin/node /opt/mcity/app/.output/server/index.mjs
+
+# Qayta tiklanish siyosati — asosiy qism
+Restart=always
+RestartSec=3
+StartLimitIntervalSec=0
+
+# Loglar journald ga tushadi
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mcity
+
+# Xavfsizlik cheklovlari (xizmat faqat o'z papkasini ko'radi)
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/mcity
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+# Eslatma: xotira cheklovi ataylab qo'yilmagan. Kam xotirali VM'da
+# (E2.1.Micro, 1 GB) setup-server.sh yaratgan 2 GB swap yetarli.
+
+[Install]
+WantedBy=multi-user.target

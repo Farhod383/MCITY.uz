@@ -1,22 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Award, ShieldCheck, FileBadge, BadgeCheck } from "lucide-react";
 import { Layout, PageHeader } from "@/components/layout/Layout";
 import { useLang } from "@/i18n/LanguageContext";
 
-export const Route = createFileRoute("/certificates")({
-  head: () => ({
-    meta: [
-      { title: "Certificates & Licenses — MCITY" },
-      { name: "description", content: "MCITY products are certified to international standards including ISO 9001, CE and GOST." },
-      { property: "og:title", content: "Certificates & Licenses — MCITY" },
-      { property: "og:url", content: "/certificates" },
-    ],
-    links: [{ rel: "canonical", href: "/certificates" }],
-  }),
-  component: CertificatesPage,
-});
-
-function CertificatesPage() {
+export function CertificatesPage() {
   const { t } = useLang();
   const certs = [
     { Icon: ShieldCheck, name: "ISO 9001:2015", desc: "Quality Management" },
