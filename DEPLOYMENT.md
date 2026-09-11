@@ -38,6 +38,49 @@ ko'rsatadi va Google saytni indekslamaydi — **bu eng muhim o'zgaruvchi**.
 
 ---
 
+## 1A. Kodni GitHub'ga qo'yish (birinchi qadam)
+
+Server kodni GitHub'dan oladi, shuning uchun bu birinchi bo'lib
+qilinadi. Zip ichidagi papkada **git tarixi allaqachon bor** va hamma
+o'zgarish commit qilingan — faqat repo ochib, yuborish qoladi.
+
+### 1A.1. GitHub'da bo'sh repo ochish
+
+1. https://github.com/new
+2. **Repository name:** `Mcity_siyt`
+3. **Public** ni tanlang
+   > Nega public: server kodni parolsiz klonlashi kerak. Repo ichida
+   > maxfiy narsa yo'q — Supabase'ning ANON kaliti ataylab ochiq
+   > (u baribir brauzerga tushadi va RLS qoidalari bilan himoyalangan).
+   > Baza paroli va `service_role` kaliti repo'da **yo'q**.
+4. **README, .gitignore, license — hech qaysini belgilamang**
+   (repo'da ular allaqachon bor)
+5. **Create repository**
+
+### 1A.2. Kodni yuborish
+
+Zipni oching, papka ichida terminal (yoki Git Bash) oching:
+
+```bash
+git push -u origin main
+```
+
+Remote allaqachon to'g'ri qo'yilgan
+(`https://github.com/Farhod383/Mcity_siyt.git`), shuning uchun boshqa
+hech narsa sozlash shart emas.
+
+GitHub login/parol so'rasa — parol o'rniga **Personal Access Token**
+kerak bo'ladi: GitHub → Settings → Developer settings → Personal access
+tokens → Tokens (classic) → Generate new token → `repo` huquqini
+belgilang.
+
+Tekshirish: https://github.com/Farhod383/Mcity_siyt — `deploy/` papkasi
+ko'rinishi kerak.
+
+> Git o'rnatilmagan bo'lsa: https://git-scm.com/download/win
+
+---
+
 ## 2. Oracle Cloud serveriga joylash (asosiy yo'l)
 
 Loyiha **TanStack Start (SSR)** — sahifalar serverda chiziladi. Bu SEO
