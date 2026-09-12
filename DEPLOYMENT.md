@@ -12,7 +12,7 @@ allaqachon tayyor.
 |---|---|
 | Domen `mcity.uz` | aHOST'da ro'yxatdan o'tgan, 08.01.2028 gacha to'langan |
 | DNS | Hozircha **Cloudflare**da (`bob.ns.cloudflare.com`, `cecelia.ns.cloudflare.com`) |
-| Hosting | **Oracle Cloud Always Free** — `deploy/` papkasida hammasi tayyor |
+| Hosting | **Vercel** — `vercel.json` repo ichida tayyor |
 | Baza | Supabase (`zmagamwoupmmufxwgbcp.supabase.co`) |
 | Kod | GitHub: `github.com/Farhod383/Mcity_siyt` — SSR, SEO, sitemap, robots, 301'lar tayyor |
 
@@ -40,216 +40,175 @@ ko'rsatadi va Google saytni indekslamaydi — **bu eng muhim o'zgaruvchi**.
 
 ## 1A. Kodni GitHub'ga qo'yish (birinchi qadam)
 
-Server kodni GitHub'dan oladi, shuning uchun bu birinchi bo'lib
-qilinadi. Zip ichidagi papkada **git tarixi allaqachon bor** va hamma
-o'zgarish commit qilingan — faqat repo ochib, yuborish qoladi.
+Vercel kodni GitHub'dan oladi va har bir `git push` da saytni **avtomatik
+yangilaydi**. Shuning uchun bu birinchi qadam.
 
-### 1A.1. GitHub'da bo'sh repo ochish
+Zip ichidagi papkada git tarixi allaqachon bor va hamma o'zgarish commit
+qilingan — faqat repo ochib, yuborish qoladi.
 
 1. https://github.com/new
 2. **Repository name:** `Mcity_siyt`
-3. **Public** ni tanlang
-   > Nega public: server kodni parolsiz klonlashi kerak. Repo ichida
-   > maxfiy narsa yo'q — Supabase'ning ANON kaliti ataylab ochiq
-   > (u baribir brauzerga tushadi va RLS qoidalari bilan himoyalangan).
-   > Baza paroli va `service_role` kaliti repo'da **yo'q**.
-4. **README, .gitignore, license — hech qaysini belgilamang**
-   (repo'da ular allaqachon bor)
+3. **Private** ham, **Public** ham bo'ladi — Vercel ikkalasini ham o'qiy
+   oladi (Oracle serveridan farqi shu: u yerda public bo'lishi shart edi)
+4. README / .gitignore / license — **hech qaysini belgilamang**
 5. **Create repository**
 
-### 1A.2. Kodni yuborish
-
-Zipni oching, papka ichida terminal (yoki Git Bash) oching:
+Keyin zipni ochib, papka ichida terminal (Git Bash) oching:
 
 ```bash
 git push -u origin main
 ```
 
-Remote allaqachon to'g'ri qo'yilgan
-(`https://github.com/Farhod383/Mcity_siyt.git`), shuning uchun boshqa
-hech narsa sozlash shart emas.
+Remote allaqachon to'g'ri qo'yilgan, boshqa hech narsa sozlash shart emas.
 
-GitHub login/parol so'rasa — parol o'rniga **Personal Access Token**
-kerak bo'ladi: GitHub → Settings → Developer settings → Personal access
-tokens → Tokens (classic) → Generate new token → `repo` huquqini
-belgilang.
-
-Tekshirish: https://github.com/Farhod383/Mcity_siyt — `deploy/` papkasi
-ko'rinishi kerak.
-
+> GitHub parol so'rasa — parol o'rniga **Personal Access Token** kerak:
+> GitHub → Settings → Developer settings → Personal access tokens →
+> Tokens (classic) → Generate new token → `repo` huquqini belgilang.
+>
 > Git o'rnatilmagan bo'lsa: https://git-scm.com/download/win
 
 ---
 
-## 2. Oracle Cloud serveriga joylash (asosiy yo'l)
+## 2. Vercel'ga joylash (asosiy yo'l)
 
 Loyiha **TanStack Start (SSR)** — sahifalar serverda chiziladi. Bu SEO
 uchun shart: Google JavaScript ishga tushirmasdan ham to'liq matnni
-ko'radi. Shuning uchun oddiy "static hosting" (aHOST'ning umumiy
-hostingi, GitHub Pages) **to'g'ri kelmaydi** — Node server kerak.
+ko'radi. Oddiy "static hosting" (aHOST'ning umumiy hostingi, GitHub
+Pages) **to'g'ri kelmaydi**.
 
-Oracle Cloud "Always Free" aynan shuni beradi: doim bepul, doim yoqiq
-virtual server. Bepul PaaS'lardan farqi — **uxlab qolmaydi**.
+Vercel SSR'ni qo'llaydi, bepul rejasi shaxsiy loyihalar uchun yetarli va
+**uxlab qolmaydi** — Render/Fly'ning bepul rejalaridan farqi shu.
 
-Repo ichida `deploy/` papkasi bor, hamma narsa avtomatlashtirilgan.
+Repo ichida `vercel.json` bor, shuning uchun Vercel hamma sozlamani o'zi
+o'qiydi.
 
-### 2.1. Virtual mashina yaratish
+### 2.1. Loyihani import qilish
 
-Oracle Cloud panelida: **Compute → Instances → Create Instance**
+1. https://vercel.com/signup → **Continue with GitHub**
+2. Panelda: **Add New…** → **Project**
+3. `Mcity_siyt` repo'sini toping → **Import**
+   > Repo ko'rinmasa: **Adjust GitHub App Permissions** → repo'ni
+   > ruxsat etilganlar ro'yxatiga qo'shing
+4. **Framework Preset:** `Other` (yoki bo'sh qoldiring)
+5. Build/Output sozlamalariga **tegmang** — `vercel.json` dan o'qiladi:
 
-| Maydon | Tanlov |
+   ```
+   Install Command:  npm ci
+   Build Command:    npm run build
+   ```
+
+### 2.2. Environment Variables
+
+**Deploy bosishdan OLDIN** import ekranidagi **Environment Variables**
+bo'limini oching va 1-bo'limdagi to'rtta o'zgaruvchini kiriting:
+
+| Name | Value |
 |---|---|
-| Image | **Ubuntu 24.04** (yoki 22.04) |
-| Shape | **VM.Standard.A1.Flex** — ARM Ampere |
-| OCPU / Memory | **2 OCPU / 12 GB** (Always Free chegarasi: 4 OCPU / 24 GB) |
-| Boot volume | 50 GB (bepul chegara 200 GB) |
-| SSH key | **Kalitni saqlab oling** — serverga faqat shu bilan kirasiz |
+| `VITE_SITE_URL` | `https://mcity.uz` |
+| `CANONICAL_HOST` | `mcity.uz` |
+| `VITE_SUPABASE_URL` | `https://zmagamwoupmmufxwgbcp.supabase.co` |
+| `VITE_SUPABASE_ANON_KEY` | `sb_publishable_...` |
 
-> **Nega A1.Flex:** ikkinchi bepul variant — `VM.Standard.E2.1.Micro`
-> da atigi **1 GB** operativ xotira bor va build paytida yiqilishi
-> mumkin. Skript 2 GB swap yaratadi, shuning uchun E2.1.Micro da ham
-> ishlaydi, lekin sekin. Imkon bo'lsa A1 oling.
+Har birini **Production, Preview, Development** — uchalasiga ham
+belgilang.
+
+> ⚠️ **Muhim:** `VITE_` bilan boshlanadigan o'zgaruvchilar **build
+> paytida** kodga yoziladi. Keyin o'zgartirsangiz, saqlash yetmaydi —
+> **Deployments → … → Redeploy** qilish kerak.
 >
-> A1 shape ba'zan "Out of capacity" beradi — bu Oracle'ning odatiy
-> holati. Boshqa "Availability Domain" ni tanlab ko'ring yoki bir necha
-> soatdan keyin qayta urinib ko'ring.
+> ⚠️ Supabase'ning `service_role` kalitini bu yerga **hech qachon**
+> qo'ymang. Faqat ANON (publishable) kalit.
 
-Yaratilgandan keyin **Public IP** manzilini yozib oling.
+### 2.3. Deploy
 
-### 2.2. Portlarni ochish (Oracle paneli)
+**Deploy** tugmasini bosing. 2–4 daqiqa davom etadi.
 
-Bu qadamni **o'tkazib yubormang** — Oracle'da tashqi portlar
-sukut bo'yicha yopiq va sayt ochilmaydi.
-
-**Networking → Virtual Cloud Networks → <VCN nomi> → Security Lists →
-Default Security List → Add Ingress Rules**
-
-| Source CIDR | IP Protocol | Destination Port |
-|---|---|---|
-| `0.0.0.0/0` | TCP | `80` |
-| `0.0.0.0/0` | TCP | `443` |
-
-### 2.3. Serverga kirish
-
-```bash
-ssh -i <saqlangan-kalit.key> ubuntu@<PUBLIC_IP>
-```
-
-Windows'da PowerShell yoki PuTTY orqali. Kalit faylining huquqini
-to'g'rilash kerak bo'lishi mumkin:
-
-```bash
-chmod 600 <saqlangan-kalit.key>
-```
-
-### 2.4. Bitta buyruq bilan o'rnatish
-
-Serverda:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/Farhod383/Mcity_siyt/main/deploy/setup-server.sh -o setup-server.sh
-chmod +x setup-server.sh
-sudo ./setup-server.sh
-```
-
-Skript nima qiladi:
-
-1. Node.js 22 ni o'rnatadi
-2. 2 GB swap yaratadi (build yiqilmasligi uchun)
-3. `mcity` foydalanuvchisini yaratadi, kodni `/opt/mcity/app` ga klonlaydi
-4. Supabase kalitlarini **so'raydi** va `.env.production` ga yozadi
-5. Loyihani yig'adi
-6. **systemd xizmatini o'rnatadi** — sayt uxlab qolmaydi
-7. nginx'ni sozlaydi va portlarni ochadi
-
-Oxirida `TAYYOR.` chiqsa — sayt serverda ishlayapti.
-
-Tekshirish:
-
-```bash
-curl -I http://127.0.0.1:3000/uz    # 200 bo'lishi kerak
-sudo systemctl status mcity
-sudo journalctl -u mcity -f          # jonli loglar
-```
-
-### 2.5. Nega sayt uxlab qolmaydi
-
-`deploy/mcity.service` faylidagi ikki qator shuni ta'minlaydi:
+Loglarda oxirida shu ko'rinsa — hammasi joyida:
 
 ```
-Restart=always              # jarayon o'lsa, 3 soniyada qayta ko'tariladi
-WantedBy=multi-user.target  # server qayta yuklansa, o'zi ishga tushadi
+Generated .vercel/output/nitro.json
+Build Completed
 ```
 
-Render/Vercel/Fly'ning bepul rejalaridan farqi shu: bu yerda hech qanday
-"uyquga ketish" yo'q, server doim yoqiq turadi. Trafik nolga tushsa ham
-sayt bir zumda javob beradi.
+Keyin Vercel bergan vaqtinchalik manzilni oching:
+`https://mcity-siyt-xxxx.vercel.app`
+
+**Domenni ulashdan oldin shu manzilda hammasini tekshiring:**
+bosh sahifa, katalog, texnika sahifasi, bog'lanish, `/admin` ga kirish
+(logoni tez 2 marta bosib).
 
 ---
 
-## 3. Domenni ulash (Oracle IP + Cloudflare)
+## 3. Domenni ulash (Vercel + Cloudflare)
 
 DNS `mcity.uz` uchun **Cloudflare**da, shuning uchun yozuvlar
 Cloudflare panelida qo'shiladi (aHOST'da emas — u yerda faqat NS
 yozuvlari turadi, ularga tegilmaydi).
 
-### 3.1. DNS yozuvlari
+### 3.1. Vercel tomonda
+
+1. Loyiha → **Settings** → **Domains** → **Add Domain**
+2. `mcity.uz` deb yozing → **Add**
+3. Vercel `www.mcity.uz` ni ham qo'shishni taklif qiladi — **rozi bo'ling**
+4. Vercel ekranda **aniq DNS qiymatlarini ko'rsatadi** — ularni ko'chirib
+   oling
+
+### 3.2. Cloudflare tomonda — DNS yozuvlari
 
 Cloudflare → `mcity.uz` → **DNS** → **Records**.
 
 Avval **eski yozuvlarni o'chiring** — Timeweb'ning parking sahifasiga
 olib boradigan `A` yozuvlari va hamma `AAAA` yozuvlari.
 
-Keyin ikkitasini qo'shing (`<PUBLIC_IP>` — Oracle bergan IP):
+Keyin ikkitasini qo'shing:
 
 | Turi | Nomi | Qiymati | Proxy holati |
 |---|---|---|---|
-| A | `@` | `<PUBLIC_IP>` | **DNS only** (kulrang bulut) |
-| A | `www` | `<PUBLIC_IP>` | **DNS only** (kulrang bulut) |
+| A | `@` | **Vercel ko'rsatgan IP** (odatda `76.76.21.21`) | **DNS only** (kulrang) |
+| CNAME | `www` | **Vercel ko'rsatgan manzil** | **DNS only** (kulrang) |
+
+> ⚠️ **Qiymatlarni bu jadvaldan emas, Vercel panelidan ko'chiring.**
+> Vercel har bir loyihaga alohida CNAME beradi (masalan
+> `d1d4fc829fe7bc7c.vercel-dns-017.com`) va yangi loyihalarga boshqa IP
+> berishi mumkin. Panel — yagona to'g'ri manba.
 
 **Kulrang bulut (DNS only) — hozircha majburiy.** To'q sariq (Proxied)
-qoldirilsa Let's Encrypt sertifikat bera olmaydi: tekshiruv serveringizga
-yetib bormaydi.
+qoldirilsa Vercel domenni tasdiqlay olmaydi va SSL sertifikat bermaydi:
+Cloudflare javobi Vercel kutgan yozuvni to'sib qo'yadi.
 
-### 3.2. HTTPS sertifikat olish
+### 3.3. Tasdiqlash va sertifikat
 
-DNS tarqalishini kuting (5–30 daqiqa). Tekshirish:
+1. DNS tarqalishini kuting (odatda 5–30 daqiqa)
+2. Vercel → Settings → Domains — holat **Valid Configuration** bo'ladi
+3. SSL sertifikat avtomatik chiqadi (yana 5–15 daqiqa)
+4. `https://mcity.uz` ni oching
 
-```bash
-nslookup mcity.uz
-```
-
-IP to'g'ri chiqsa, serverda:
-
-```bash
-sudo apt install -y certbot python3-certbot-nginx
-sudo certbot --nginx -d mcity.uz -d www.mcity.uz
-```
-
-Certbot email so'raydi, shartlarga rozilik so'raydi va nginx
-konfiguratsiyasiga HTTPS blokini **o'zi qo'shadi**. Sertifikat har
-60 kunda avtomatik yangilanadi.
-
-Tekshirish:
-
-```bash
-sudo certbot renew --dry-run
-```
-
-### 3.3. Cloudflare SSL sozlamasi
+### 3.4. Cloudflare SSL sozlamasi
 
 Sertifikat chiqqandan **keyin**:
 
-Cloudflare → **SSL/TLS** → **Overview** → **Full (strict)**.
+Cloudflare → **SSL/TLS** → **Overview** → **Full** (yoki **Full
+(strict)**).
 
-"Flexible" qo'yilsa cheksiz yo'naltirish (redirect loop) bo'ladi —
-sayt umuman ochilmaydi.
+"Flexible" qo'yilsa cheksiz yo'naltirish (`err_too_many_redirects`)
+bo'ladi — sayt umuman ochilmaydi.
 
 Endi xohlasangiz proxy'ni to'q sariqqa (Proxied) o'tkazishingiz mumkin —
-kesh, DDoS himoyasi va serveringizning haqiqiy IP'si yashiriladi.
-Bu tavsiya etiladi, lekin **sertifikat chiqmaguncha tegmang**.
+kesh va DDoS himoyasi qo'shiladi. **Lekin sertifikat chiqmaguncha
+tegmang.**
 
-### 3.4. Pochta yozuvlari — TEGMANG
+### 3.5. CAA yozuvi bo'lsa
+
+Cloudflare DNS'da `CAA` yozuvi bo'lsa, u **Let's Encrypt**ga ruxsat
+berishi kerak, aks holda sertifikat chiqmaydi:
+
+```
+CAA  @  0 issue "letsencrypt.org"
+```
+
+CAA yozuvi umuman bo'lmasa — hech narsa qilish shart emas.
+
+### 3.6. Pochta yozuvlari — TEGMANG
 
 Pochta hozir Timeweb'da. Bu yozuvlar o'chirilsa `info@mcity.uz`
 ishlamay qoladi:
@@ -266,7 +225,7 @@ TXT  @   "v=spf1 include:_spf.timeweb.ru ~all"
 
 ## 3A. Keyinchalik kodni yangilash
 
-Kompyuteringizda o'zgarish qilib, GitHub'ga yuborasiz:
+Bu Vercel'ning eng qulay tomoni — **qo'lda hech narsa qilinmaydi**:
 
 ```bash
 git add .
@@ -274,26 +233,12 @@ git commit -m "nima o'zgardi"
 git push
 ```
 
-Keyin serverda bitta buyruq:
+Vercel push'ni o'zi sezadi, yangi versiyani yig'adi va ~2 daqiqada
+saytga chiqaradi. Build yiqilsa — **eski versiya ishlashda davom
+etadi**, sayt o'chib qolmaydi.
 
-```bash
-sudo /opt/mcity/app/deploy/update.sh
-```
-
-Skript yangi kodni oladi, yig'adi va xizmatni qayta ishga tushiradi.
-**Build yiqilsa — eski versiya ishlashda davom etadi**, sayt o'chib
-qolmaydi.
-
-### Foydali buyruqlar
-
-| Buyruq | Nima qiladi |
-|---|---|
-| `sudo systemctl status mcity` | xizmat holati |
-| `sudo systemctl restart mcity` | qayta ishga tushirish |
-| `sudo journalctl -u mcity -f` | jonli loglar |
-| `sudo journalctl -u mcity -n 100` | oxirgi 100 qator log |
-| `sudo nginx -t && sudo systemctl reload nginx` | nginx sozlamasini tekshirib qayta o'qish |
-| `free -h` | xotira holati |
+Har bir push uchun alohida "Preview" manzili ham beriladi — domenga
+chiqarishdan oldin tekshirib ko'rish mumkin.
 
 ### Boshqa hosting kerak bo'lsa
 
@@ -301,8 +246,8 @@ Kodni o'zgartirish shart emas — faqat `NITRO_PRESET` o'zgaruvchisi:
 
 | Hosting | Buyruq | Natija |
 |---|---|---|
-| Oracle / VPS (hozirgi) | `npm run build` | `.output/server/index.mjs` |
-| Vercel | `NITRO_PRESET=vercel npm run build` | `.vercel/output` |
+| Vercel (hozirgi) | `npm run build` | `.vercel/output` |
+| VPS / Oracle Cloud | `NITRO_PRESET=node-server npm run build` | `.output/server/index.mjs` |
 | Cloudflare Pages | `NITRO_PRESET=cloudflare-module npm run build` | `dist` |
 
 ---
@@ -313,8 +258,8 @@ Timeweb'dagi 10 kunlik sinov muddati tugagach, domen o'sha yerdan
 uzilishi kerak. Yangi hosting ishga tushgach:
 
 1. Cloudflare DNS'dagi eski `A` va `AAAA` yozuvlari (Timeweb serveriga
-   qaragan) o'chiriladi va o'rniga 3.1-bo'limdagi `A` yozuvlari
-   (Oracle serveringizning IP'si) qo'yiladi
+   qaragan) o'chiriladi va o'rniga 3.2-bo'limdagi Vercel yozuvlari
+   qo'yiladi
 2. Timeweb akkauntini yopish mumkin (pochta o'sha yerda qolsa, faqat
    hosting qismini)
 
@@ -410,10 +355,9 @@ Saytni ochgandan keyin quyidagilarni bittalab tekshiring:
 | `https://mcity.uz/sitemap.xml` | XML ochiladi, ichida 4 til bor |
 | `https://mcity.uz/uz/about/` | `/uz/about` ga 301 (oxirgi `/` siz) |
 | `https://mcity.uz/admin` | kirmagan odam bosh sahifaga qaytariladi |
-| `sudo systemctl status mcity` | `active (running)` |
-| `sudo systemctl is-enabled mcity` | `enabled` (server qayta yuklansa o'zi ishga tushadi) |
-| `sudo certbot certificates` | `mcity.uz`, `www.mcity.uz` — VALID |
-| `sudo reboot` dan keyin sayt | o'zi ko'tariladi, qo'lda hech narsa qilinmaydi |
+| Vercel → Settings → Domains | `mcity.uz` — **Valid Configuration** |
+| Vercel → Deployments | oxirgi deploy **Ready** (qizil emas) |
+| `git push` qilib ko'ring | 2 daqiqada saytda ko'rinadi |
 
 Foydali asboblar:
 
@@ -440,18 +384,16 @@ Foydali asboblar:
   Buning uchun `20260907140000_catalog_pdf.sql` migratsiyasi ishga
   tushirilgan bo'lishi shart — u Supabase Storage'da `catalog` papkasini
   yaratadi. Fayl yuklanmaguncha saytda yuklab olish tugmasi ko'rinmaydi.
-- **Oracle "Always Free" resurslari o'chirilishi mumkin.** Oracle 7 kun
-  umuman ishlatilmagan bepul mashinalarni o'chirib qo'yish huquqini
-  saqlaydi. Sayt doim ishlab turgani uchun bu xavf kichik, lekin Oracle
-  akkauntingizga vaqti-vaqti bilan kirib turing.
-- **`git push` o'zi deploy qilmaydi.** Serverda `sudo
-  /opt/mcity/app/deploy/update.sh` ni ishga tushirish kerak (3A-bo'lim).
-- **`VITE_` o'zgaruvchilari build paytida kodga yoziladi.**
-  `.env.production` ni o'zgartirsangiz, qayta build qilish shart —
-  `update.sh` buni o'zi qiladi.
-- **Zaxira nusxa.** Server ma'lumoti Supabase'da, kod GitHub'da —
-  serverning o'zida yo'qoladigan narsa yo'q. Server buzilsa,
-  `setup-server.sh` ni yangi mashinada ishga tushirish kifoya.
+- **Vercel bepul ("Hobby") rejasi faqat tijoriy bo'lmagan loyihalar
+  uchun.** MCITY — biznes sayti, shuning uchun qat'iy qoidaga ko'ra Pro
+  reja (oyiga $20) talab qilinishi mumkin. Amalda kichik saytlar Hobby'da
+  ishlab turadi, lekin Vercel ogohlantirsa — bu kutilgan holat, xato
+  emas.
+- **`VITE_` o'zgaruvchilari build paytida kodga yoziladi.** Vercel'da
+  ularni o'zgartirgandan keyin **Redeploy** qilish shart.
+- **Zaxira nusxa.** Ma'lumot Supabase'da, kod GitHub'da — Vercel'da
+  yo'qoladigan narsa yo'q. Akkaunt o'chsa ham, kodni boshqa hostingga
+  ko'chirish 10 daqiqalik ish (3A-bo'lim oxiridagi jadval).
 - **Mahsulotlarda narx yo'q**, shuning uchun `Product` schema ichida
   `offers` yozilmagan. Narx qo'shsangiz, u avtomatik paydo bo'ladi.
   Soxta narx yozish Google jazosiga olib keladi.

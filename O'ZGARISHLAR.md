@@ -408,39 +408,32 @@ Shundan keyin sizdan boshqa hech kim akkaunt ocholmaydi.
 
 ---
 
-## 13. Serverga joylashga tayyorlash (yangi)
+## 13. Vercel'ga joylashga tayyorlash (yangi)
 
-Sayt endi **Oracle Cloud Always Free** serverida (va umuman har qanday
-Node serverida) ishlaydigan holatga keltirildi. Ilgari build faqat
-Cloudflare uchun mo'ljallangan edi va **ishga tushiriladigan fayl
+Sayt endi **Vercel**da ishlaydigan holatga keltirildi. Ilgari build
+faqat Cloudflare uchun mo'ljallangan edi va **ishga tushiriladigan fayl
 umuman chiqmasdi** — hech qaysi hostingda ishlamasdi.
 
 **Nima o'zgardi:**
 
-- `vite.config.ts` — nitro majburan yoqildi va `node-server` rejimiga
-  o'tkazildi. Endi `npm run build` `.output/server/index.mjs` faylini
-  chiqaradi. `NITRO_PRESET` o'zgaruvchisi orqali Vercel yoki Cloudflare
-  uchun ham yig'sa bo'ladi — kodga tegmasdan.
+- `vite.config.ts` — nitro majburan yoqildi va `vercel` rejimiga
+  o'tkazildi. Endi `npm run build` `.vercel/output` papkasini chiqaradi
+  (Vercel Build Output API v3) va Vercel uni avtomatik tanib oladi.
+  `NITRO_PRESET` o'zgaruvchisi orqali VPS yoki Cloudflare uchun ham
+  yig'sa bo'ladi — kodga tegmasdan.
 - `vite.config.ts` — xavfsizlik va kesh sarlavhalari (`X-Frame-Options`,
   `Referrer-Policy`, `/assets` uchun abadiy kesh, `/admin` uchun
   `noindex`) shu yerga ko'chirildi. Ilgari ular `public/_headers`
-  faylida edi — u faqat Cloudflare Pages'da ishlardi, boshqa hech
-  qayerda o'qilmasdi.
-- `package.json` — `npm start` buyrug'i va Node 22 talabi qo'shildi.
+  faylida edi — u faqat Cloudflare Pages'da ishlardi, **Vercel uni
+  umuman o'qimaydi**. Endi ular build natijasidagi `config.json` ga
+  yoziladi va Vercel'da ham ishlaydi.
+- `vercel.json` (yangi) — Vercel uchun build buyruqlari.
+- `package.json` — Node 22 talabi (`"node": "22.x"`) qo'shildi.
 - `src/server.ts` — `www` → `mcity.uz` yo'naltirishi tuzatildi.
-  Ilgari u `http://mcity.uz` ga olib borardi (chunki nginx orqasida
+  Ilgari u `http://mcity.uz` ga olib borardi (chunki proksi orqasida
   so'rov http bo'lib keladi), natijada ikki marta yo'naltirish
   (redirect chain) hosil bo'lardi — bu SEO uchun zarar. Endi doim
   `https://mcity.uz` ga bir marta yo'naltiradi.
-
-**Yangi `deploy/` papkasi:**
-
-| Fayl | Nima qiladi |
-|---|---|
-| `setup-server.sh` | Serverni noldan sozlaydi: Node, swap, kod, build, systemd, nginx, portlar |
-| `update.sh` | Kodni yangilaydi va qayta ishga tushiradi. Build yiqilsa — eski versiya ishlab turaveradi |
-| `mcity.service` | systemd xizmati. `Restart=always` — **sayt uxlab qolmaydi** |
-| `nginx-mcity.conf` | nginx: 80/443 ni ushlaydi, `/assets` ni o'zi beradi, qolganini Node'ga uzatadi |
 
 **Git uchun qo'shilgan fayllar:**
 
@@ -451,8 +444,8 @@ umuman chiqmasdi** — hech qaysi hostingda ishlamasdi.
   qo'shildi, ular hech qachon repo'ga tushmaydi
 
 **Tekshirilgani:** toza muhitda (`node_modules` o'chirilgan holda)
-`npm ci` va `npm run build` o'tkazildi, chiqqan server ishga tushirildi
-va nginx orqali kelganday so'rovlar yuborildi:
+`npm ci` va `npm run build` o'tkazildi — Vercel aynan shuni bajaradi.
+Chiqqan server funksiyasi ishga tushirilib, so'rovlar yuborildi:
 
 | Tekshiruv | Natija |
 |---|---|
@@ -462,16 +455,16 @@ va nginx orqali kelganday so'rovlar yuborildi:
 | `www.mcity.uz/uz/about` | `https://mcity.uz/uz/about` ga 301 |
 | `http` → `https` | 301 |
 | `/products/fuel-tanker` | `/uz/maxsus-texnika/fuel-tanker` ga 301 |
-| `/robots.txt`, `/sitemap.xml` | 200 |
-| Xavfsizlik sarlavhalari | hammasi joyida |
+| `/robots.txt`, `/sitemap.xml` | 200 (sitemap'da 168 manzil) |
+| Xavfsizlik sarlavhalari | build natijasidagi `config.json` da bor |
 | `/admin` | `X-Robots-Tag: noindex, nofollow` |
-| `HOST=127.0.0.1` | faqat ichkarida eshitadi (nginx orqali chiqadi) |
+| canonical va hreflang | to'g'ri (`https://mcity.uz/...`) |
 | Brauzerdagi JS xatolari | yo'q |
 | `npx tsc --noEmit` | xato yo'q |
 
-**Qo'lda qilinadigan ishlar** — `DEPLOYMENT.md`, 2–3 bo'limlar:
-Oracle'da VM yaratish, portlarni ochish, bitta skriptni ishga tushirish,
-Cloudflare'da DNS'ni almashtirish, certbot bilan HTTPS olish.
+**Qo'lda qilinadigan ishlar** — `DEPLOYMENT.md`, 1A–3 bo'limlar:
+GitHub'ga push, Vercel'ga import, muhit o'zgaruvchilarini kiritish,
+Cloudflare'da DNS'ni almashtirish.
 
 > Eslatma: `__root.tsx` dagi eski tip xatosi ham shu safar tuzatildi —
 > endi `npx tsc --noEmit` hech qanday xato bermaydi.
@@ -493,8 +486,8 @@ Cloudflare'da DNS'ni almashtirish, certbot bilan HTTPS olish.
 - **Yo'nalishlar (kategoriyalar) panelda tahrirlanmaydi.** Ular kamdan-kam
   o'zgargani uchun hozircha faqat bazadan o'zgartiriladi. Kerak bo'lsa
   keyin qo'shib beraman.
-- **`git push` o'zi saytni yangilamaydi.** Serverda `sudo
-  /opt/mcity/app/deploy/update.sh` ni ishga tushirish kerak.
-- **`VITE_` o'zgaruvchilari build paytida kodga yoziladi.**
-  `.env.production` ni o'zgartirsangiz, qayta build qilish shart —
-  `update.sh` buni o'zi qiladi.
+- **`git push` — saytni yangilashning yagona yo'li.** Vercel push'ni
+  o'zi sezadi va ~2 daqiqada saytga chiqaradi. Qo'lda hech narsa
+  qilinmaydi.
+- **`VITE_` o'zgaruvchilari build paytida kodga yoziladi.** Vercel
+  panelida ularni o'zgartirgandan keyin **Redeploy** qilish shart.
