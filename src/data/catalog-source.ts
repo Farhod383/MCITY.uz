@@ -207,11 +207,13 @@ export async function loadCatalog(): Promise<Catalog> {
         .select("id, value, label")
         .eq("is_published", true)
         .order("sort_order", { ascending: true }),
+      // "*" — ustunlar ro'yxati qat'iy yozilsa, bazaga biror migratsiya
+      // (masalan phones yoki map_*) hali qo'llanmagan bo'lsa butun so'rov
+      // 400 qaytaradi va barcha sozlamalar (PDF katalog ham) yo'qoladi.
+      // Yetishmagan ustunlarni mapSettings zaxira qiymat bilan to'ldiradi.
       supabase
         .from("site_settings")
-        .select(
-          "about, address, tagline, phone, phones, email, facebook, instagram, linkedin, telegram, catalog_pdf_url, catalog_pdf_name, catalog_pdf_updated_at, map_lat, map_lng, map_zoom",
-        )
+        .select("*")
         .eq("id", "main")
         .maybeSingle(),
       ]),

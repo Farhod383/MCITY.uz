@@ -14,6 +14,7 @@ import { useLang } from "@/i18n/LanguageContext";
 import { LANGS, type Lang } from "@/i18n/translations";
 import { useAuth } from "@/auth/AuthContext";
 import { Logo } from "@/components/Logo";
+import { CatalogPdfButton } from "@/components/CatalogPdfButton";
 
 const navItems: { page: PageKey; key: string }[] = [
   { page: "home", key: "nav.home" },
@@ -66,7 +67,7 @@ export function Header() {
               key={n.page}
               page={n.page}
               activeOptions={{ exact: n.page === "home" }}
-              className="rounded-sm px-3 py-2 text-[13px] font-semibold uppercase tracking-wide text-sidebar-foreground/70 transition-colors hover:text-white"
+              className="whitespace-nowrap rounded-sm px-3 py-2 text-[13px] font-semibold uppercase tracking-wide text-sidebar-foreground/70 transition-colors hover:text-white"
               activeProps={{ className: "text-white" }}
             >
               {t(n.key)}
@@ -91,6 +92,20 @@ export function Header() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+
+          {/* PDF katalog — admin panel → Sozlamalar'da yuklangan fayl */}
+          <CatalogPdfButton
+            label="short"
+            variant="industrial"
+            size="sm"
+            className="hidden h-9 md:inline-flex xl:hidden 2xl:inline-flex"
+          />
+          <CatalogPdfButton
+            label="icon"
+            variant="industrial"
+            size="icon"
+            className="h-9 w-9 md:hidden xl:inline-flex 2xl:hidden"
+          />
 
           {/* CTA */}
           <Button asChild variant="outlineLight" size="sm" className="hidden h-9 lg:inline-flex">
@@ -118,7 +133,8 @@ export function Header() {
                     {t(n.key)}
                   </L>
                 ))}
-                <Button asChild variant="industrial" size="lg" className="mt-4">
+                <CatalogPdfButton variant="outlineLight" size="lg" className="mt-4" onClick={() => setMobileOpen(false)} />
+                <Button asChild variant="industrial" size="lg" className="mt-2">
                   <L page="contact" onClick={() => setMobileOpen(false)}>{t("cta.quote")}</L>
                 </Button>
               </nav>

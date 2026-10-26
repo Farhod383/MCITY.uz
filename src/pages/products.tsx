@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Search, SlidersHorizontal, FileDown } from "lucide-react";
+import { Search, SlidersHorizontal } from "lucide-react";
 import { Layout, PageHeader } from "@/components/layout/Layout";
 import { ProductCard } from "@/components/ProductCard";
 import { Configurator } from "@/components/Configurator";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { CatalogPdfButton } from "@/components/CatalogPdfButton";
 import { useLang } from "@/i18n/LanguageContext";
 import { useCatalog } from "@/data/useCatalog";
 
@@ -29,7 +29,7 @@ export function ProductsPage({
   subheading?: string;
 }) {
   const { t, lang } = useLang();
-  const { categories, products, settings } = useCatalog();
+  const { categories, products } = useCatalog();
   const [query, setQuery] = useState(search.q ?? "");
   const activeCat = search.cat;
 
@@ -60,18 +60,7 @@ export function ProductsPage({
           {/* PDF katalog admin paneldan yuklanadi.
               Fayl yuklanmagan bo'lsa tugma umuman ko'rinmaydi —
               ishlamaydigan tugma ko'rsatishdan ko'ra shunisi yaxshi. */}
-          {settings.catalogPdfUrl && (
-            <Button variant="outline" asChild>
-              <a
-                href={settings.catalogPdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                download={settings.catalogPdfName || "MCITY-katalog.pdf"}
-              >
-                <FileDown className="h-4 w-4" /> {t("cta.downloadPdf")}
-              </a>
-            </Button>
-          )}
+          <CatalogPdfButton variant="outline" />
         </div>
 
         {/* Category filter chips */}
