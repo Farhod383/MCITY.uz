@@ -237,3 +237,120 @@
     }
   }
 }
+
+/* ===== Konfigurator: "Bitta shassi — ko'plab yechimlar" ===== */
+.cfg {
+  background:
+    radial-gradient(ellipse 55% 42% at 50% 42%, rgba(255, 255, 255, 0.08), transparent 70%),
+    linear-gradient(180deg, #15181b, #0b0d0f);
+}
+.cfg:focus-visible { box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.4); }
+.cfg-stage {
+  position: relative;
+  margin-top: 20px;
+  min-height: 30rem;
+  padding: 56px 20px 1.2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  border-radius: 16px;
+  touch-action: pan-y;
+  user-select: none;
+  background: linear-gradient(180deg, #9fd0ea, #d8eef0 60%, #4f8d3f);
+}
+.cfg-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 72%;
+}
+.cfg-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1.25fr) minmax(0, 3.4fr) minmax(0, 1.25fr) auto;
+  align-items: end;
+  gap: 18px;
+}
+.cfg-arrow { background: rgba(22, 22, 22, 0.8); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3); }
+.cfg-arrow:hover { background: #161616; border-color: rgba(255, 255, 255, 0.5); }
+.cfg-pv { background: none; border: 0; color: inherit; cursor: pointer; }
+.cfg-pv svg { width: 100%; transition: transform 0.3s; }
+.cfg-pv:hover svg { transform: scale(1.05); }
+.cfg-pv p {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+.cfg-main { position: relative; width: 74%; margin: 0 auto; transform: translateY(-7%); }
+.cfg-main svg { width: 100%; filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.45)); }
+.cfg-shadow {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 5%;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  filter: blur(8px);
+  z-index: -1;
+}
+@media (max-width: 1023px) {
+  .cfg-stage { min-height: 27rem; }
+  .cfg-grid { grid-template-columns: auto minmax(0, 1fr) minmax(0, 3fr) minmax(0, 1fr) auto; gap: 10px; }
+}
+@media (max-width: 767px) {
+  .cfg-stage { min-height: 16rem; padding: 40px 10px 1.2%; }
+  .cfg-grid { grid-template-columns: 1fr; }
+  .cfg-pv { display: none; }
+  .cfg-main { width: 100%; }
+}
+
+.cfg-body {
+  transform-box: view-box;
+  transform-origin: 705px 230px;
+  will-change: transform, opacity;
+}
+.cfg-body-in { animation: cfg-body-in 650ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+.cfg-body-out { animation: cfg-body-out 650ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+@keyframes cfg-body-in {
+  from { opacity: 0.45; transform: translate(calc(var(--cfg-dir, 1) * 68%), 4%) scale(0.3); }
+  to { opacity: 1; transform: translate(0, 0) scale(1); }
+}
+@keyframes cfg-body-out {
+  from { opacity: 1; transform: translate(0, 0) scale(1); }
+  to { opacity: 0; transform: translate(calc(var(--cfg-dir, 1) * -68%), 4%) scale(0.3); }
+}
+.cfg-preview {
+  display: flex;
+  flex-direction: column-reverse;
+  padding-bottom: 6%;
+  animation: cfg-preview-in 650ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+@keyframes cfg-preview-in {
+  from { opacity: 0; transform: translateX(var(--cfg-from-x, 60%)) scale(var(--cfg-from-s, 0.8)); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+.cfg-persp-left { transform: perspective(460px) rotateY(15deg); }
+.cfg-persp-right { transform: perspective(460px) rotateY(-15deg); }
+.cfg-text { animation: cfg-text-in 520ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+@keyframes cfg-text-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cfg-body-in, .cfg-body-out, .cfg-preview, .cfg-text {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Search, SlidersHorizontal, FileDown } from "lucide-react";
 import { Layout, PageHeader } from "@/components/layout/Layout";
 import { ProductCard } from "@/components/ProductCard";
+import { Configurator } from "@/components/Configurator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/i18n/LanguageContext";
@@ -44,6 +45,11 @@ export function ProductsPage({
   return (
     <Layout>
       <PageHeader title={heading ?? t("nav.products")} subtitle={subheading ?? t("categories.subtitle")} />
+      {/* Bitta shassi — ko'plab yechimlar (kuzovlar: src/data/configurator.ts) */}
+      <div className="mx-auto max-w-7xl px-4 pt-12 sm:px-6">
+        <Configurator />
+      </div>
+
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
         {/* Toolbar */}
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
