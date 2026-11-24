@@ -1,5 +1,6 @@
 import fuelTanker from "@/assets/veh-fuel-tanker.jpg";
 import waterTanker from "@/assets/veh-water-tanker.jpg";
+import technicalWater from "@/assets/veh-technical-water.webp";
 import sewerTruck from "@/assets/veh-sewer-truck.jpg";
 import sweeper from "@/assets/veh-sweeper.jpg";
 import garbage from "@/assets/veh-garbage.jpg";
@@ -28,6 +29,7 @@ import hero from "@/assets/mcity-hero.jpg";
 export const ASSETS: Record<string, string> = {
   "veh-fuel-tanker": fuelTanker,
   "veh-water-tanker": waterTanker,
+  "veh-technical-water": technicalWater,
   "veh-sewer-truck": sewerTruck,
   "veh-sweeper": sweeper,
   "veh-garbage": garbage,

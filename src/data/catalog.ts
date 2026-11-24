@@ -1,6 +1,7 @@
 import type { Lang } from "@/i18n/translations";
 import fuelTanker from "@/assets/veh-fuel-tanker.jpg";
 import waterTanker from "@/assets/veh-water-tanker.jpg";
+import technicalWater from "@/assets/veh-technical-water.webp";
 import sewerTruck from "@/assets/veh-sewer-truck.jpg";
 import sweeper from "@/assets/veh-sweeper.jpg";
 import garbage from "@/assets/veh-garbage.jpg";
@@ -124,7 +125,7 @@ export const products: Product[] = [
       "Автоцистерна для доставки технической воды на строительные и промышленные объекты.",
       "Tanker for delivering technical water to construction and industrial sites.",
     ),
-    image: waterTanker, gallery: [waterTanker],
+    image: technicalWater, gallery: [technicalWater],
     specs: [spec(CAP, "8 000 – 20 000 L"), spec(CHS, "KamAZ / Howo"), spec(APP, "Sanoat")],
   },
   {
