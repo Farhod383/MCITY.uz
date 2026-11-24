@@ -147,7 +147,8 @@ function mapProduct(row: ProductRow, categoryIdBySlug: Map<string, string>): Pro
     name: toLoc(row.name),
     description: toLoc(row.description),
     image,
-    gallery: gallery.length ? gallery.map((g) => resolveImage(g, image)) : [image],
+    // Galereyada 1 ta rasm bo'lsa, admin paneldagi asosiy rasm ishlatiladi
+    gallery: gallery.length > 1 ? gallery.map((g) => resolveImage(g, image)) : [image],
     priceUzs: row.price_uzs == null ? null : Number(row.price_uzs),
     bestseller: Boolean(row.bestseller),
     specs: specsRaw.map((s) => ({ label: toLoc(s.label), value: String(s.value ?? "") })),
